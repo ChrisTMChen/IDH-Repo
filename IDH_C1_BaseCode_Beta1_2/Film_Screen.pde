@@ -8,18 +8,18 @@ class FilmScreen {
   void draw() {
 
     fill(255);
-    textFont(font1, 40);
-    text("Fujifilm industrial 400", 320, 1038);
+    textFont(font1, body);
+    text("Fujifilm industrial 400", left, top1);
 
-    textFont(font2, 68);
+    textFont(font2, heading);
     fill(251, 207, 24);
-    text("film feed", 180, 90);
+    text("film feed", left, top);
     
-    image(fuji400, 0, 840);
+    image(fuji400, left, bottom1, w/10, h/10);
 
     x = x + SfilmSpeed;
     for (int i = 0; i < Sfilm.length; i++) { 
-      image(Sfilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + height, y -120 );
+      image(Sfilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h, y - y/9 );
     }
   }
 }

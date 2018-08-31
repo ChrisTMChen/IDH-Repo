@@ -10,10 +10,13 @@ class DigitalClock extends Clock {
   }
 
   void display(float x, float y) {
+   
     textSize(fontSize);
-    textAlign(CENTER);
-    text (h + ":" + nf(m, 2), 1840, 60);
-  }
+    textAlign(RIGHT);
+    text (h + ":" + nf(m, 2), right, top);
+    textAlign(LEFT); //reset text align to left
+  
+}
 }
 
 class Clock {

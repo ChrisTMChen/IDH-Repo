@@ -8,14 +8,14 @@ class IntroScreen {
   void draw() {
 
     fill(255);
-    textFont(font1, 40);
-    text("Place a film or camera infront of the orb to begin.", 560, 1038);
+    textFont(font1, body);
+    text("Place a film or camera infront of the orb to begin.", left, bottom);
 
-    textFont(font2, 68);
+    textFont(font2, heading);
     fill(251, 207, 24);
-    text("feed", 110, 90);
+    text("feed", left, top);
 
-  image(myAnimation, 650,250);
+  image(myAnimation, xcentre/2, ycentre/2, xcentre, ycentre);
   
     }
   }
