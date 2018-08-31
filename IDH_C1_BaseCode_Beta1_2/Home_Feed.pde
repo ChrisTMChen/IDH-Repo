@@ -1,7 +1,7 @@
-class IntroScreen {
+class HomeFeed {
   PFont font;
 
-  IntroScreen() {
+  HomeFeed() {
     font = loadFont("FuturaPT-Heavy-48.vlw");
   }
 
@@ -9,11 +9,11 @@ class IntroScreen {
 
     fill(255);
     textFont(font1, body);
-    text("Place a film or camera infront of the orb to begin.", left, bottom);
+    text("Place a film or camera in front of the orb to begin.", left, bottom);
 
     textFont(font2, heading);
     fill(251, 207, 24);
-    text("feed", left, top);
+    text("feed", left1, top);
 
   image(myAnimation, xcentre/2, ycentre/2, xcentre, ycentre);
   

@@ -13,7 +13,7 @@ class DigitalClock extends Clock {
    
     textSize(fontSize);
     textAlign(RIGHT);
-    text (h + ":" + nf(m, 2), right, top);
+    text (h + ":" + nf(m, 2), right, top1);
     textAlign(LEFT); //reset text align to left
   
 }

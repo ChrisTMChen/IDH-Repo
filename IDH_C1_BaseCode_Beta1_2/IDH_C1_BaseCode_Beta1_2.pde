@@ -13,17 +13,22 @@ PImage logo;
 Gif myAnimation;
 DigitalClock digitalClock;
 FilmScreen screen1;
-IntroScreen intro;
+HomeFeed home;
 
 float curTime, prevTime;
 
 int timeOut = 5000;
 
 //sizes
-int w = 1280; //--------------------<set w
-int h = 720; //---------------------<set h
-int camW = 640; //--------------------<set camera resolution
-int camH = 480; //--------------------<set camera resolution
+int w = 1920; //--------------------<set w
+int h = 1080; //---------------------<set h
+int camW = 1280; //--------------------<set camera resolution
+int camH = 720; //----------------------<set camera resolution
+
+//int w = 1280; //--------------------<set w
+//int h = 720; //---------------------<set h
+//int camW = 640; //--------------------<set camera resolution
+//int camH = 480; //----------------------<set camera resolution
 
 //font sizes
 int heading;
@@ -35,13 +40,13 @@ int body2;
 int left;
 int left1;
 int xcentre;
+int ycentre;
 int right;
 int right1;
 int top;
 int top1;
 int bottom;
 int bottom1;
-int ycentre;
 int state = 0;
 
 PImage fuji400; 
@@ -54,26 +59,28 @@ float SfilmSpeed;
 
 //------------------------------------------------------------setup
 void setup() {
+  size(1920, 1080, P3D); //needs 16:9
+  //size(1280, 720, P3D); //needs 16:9
 
-  size(1280, 720, P3D); //needs 16:9
-  
+
   textAlign(LEFT);
   heading = h/15;
   body = h/30;
   body1 = h/45;
-  left = w/10;
-  right = w-w/10;
-  top = h/10;
-  top1 = h/5;
-  bottom = h-h/10;
+  left = w/12;
+  left1 = w/38;
+  right = w-w/40;
+  top = h/12;
+  top1 = h/16;
+  bottom = h-h/25;
   bottom1 = h-h/5;
   xcentre = w/2;
   ycentre = h/2;
-  
+
   logo = loadImage("cornerlogo.jpg");
   stroke(255);
 
-  intro = new IntroScreen();
+  home = new HomeFeed();
   screen1 = new FilmScreen();
 
   /* setup animation */
@@ -95,6 +102,7 @@ void setup() {
   nya=new MultiMarker(this, width, height, "camera_para.dat", NyAR4PsgConfig.CONFIG_PSG);
   nya.addARMarker("patt.hiro", 80);//id=0
   nya.addARMarker("patt.kanji", 80);//id=1
+  nya.addNyIdMarker(358, 80); //id=358
   cam.start();
 
   /* strip setup */
@@ -123,7 +131,7 @@ void drawScreens() {
 
   if (state == 0)
   {
-    intro.draw();
+    home.draw();
   } else
     if (state == 1)
     {
@@ -134,7 +142,7 @@ void drawScreens() {
 
 //------------------------------------------------------------updateState
 void updateState() {
-  
+
   if ((state == 0) && (marker_detected == true)) {
     state = 1;
   }
@@ -160,9 +168,9 @@ void updateTimer() {
 
 //------------------------------------------------------------Draw
 void draw() {
-  
-  println(frameRate);
-   background(47, 54, 64);
+
+  //println(frameRate);
+  background(47, 54, 64);
   image(logo, 0, 980);
 
   detectMarker();

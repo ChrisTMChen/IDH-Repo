@@ -9,11 +9,11 @@ class FilmScreen {
 
     fill(255);
     textFont(font1, body);
-    text("Fujifilm industrial 400", left, top1);
+    text("Fujifilm industrial 400", left, bottom);
 
     textFont(font2, heading);
     fill(251, 207, 24);
-    text("film feed", left, top);
+    text("film feed", left1, top);
     
     image(fuji400, left, bottom1, w/10, h/10);
 
