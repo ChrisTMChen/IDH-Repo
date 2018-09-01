@@ -15,7 +15,7 @@ class FilmScreen {
     fill(251, 207, 24);
     text("film feed", left1, top);
     
-    image(fuji400, left, bottom1, w/10, h/10);
+    image(fuji400, 0, 840);
 
     x = x + SfilmSpeed;
     for (int i = 0; i < Sfilm.length; i++) { 

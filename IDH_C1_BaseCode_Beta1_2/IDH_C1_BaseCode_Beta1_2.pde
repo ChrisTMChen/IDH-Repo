@@ -17,18 +17,18 @@ HomeFeed home;
 
 float curTime, prevTime;
 
-int timeOut = 5000;
+int timeOut = 3000;
 
 //sizes
 int w = 1920; //--------------------<set w
 int h = 1080; //---------------------<set h
-int camW = 1280; //--------------------<set camera resolution
-int camH = 720; //----------------------<set camera resolution
+int camW = 1920; //--------------------<set camera resolution
+int camH = 1080; //----------------------<set camera resolution
 
 //int w = 1280; //--------------------<set w
 //int h = 720; //---------------------<set h
-//int camW = 640; //--------------------<set camera resolution
-//int camH = 480; //----------------------<set camera resolution
+//int camW = 1280; //--------------------<set camera resolution
+//int camH = 720; //----------------------<set camera resolution
 
 //font sizes
 int heading;
@@ -47,6 +47,7 @@ int top;
 int top1;
 int bottom;
 int bottom1;
+
 int state = 0;
 
 PImage fuji400; 
@@ -66,7 +67,7 @@ void setup() {
   textAlign(LEFT);
   heading = h/15;
   body = h/30;
-  body1 = h/45;
+  body1 = h/22;
   left = w/12;
   left1 = w/38;
   right = w-w/40;
@@ -100,8 +101,8 @@ void setup() {
   println(MultiMarker.VERSION);
   cam=new Capture(this, camW, camH);
   nya=new MultiMarker(this, width, height, "camera_para.dat", NyAR4PsgConfig.CONFIG_PSG);
-  nya.addARMarker("patt.hiro", 80);//id=0
-  nya.addARMarker("patt.kanji", 80);//id=1
+  //nya.addARMarker("patt.hiro", 80);//id=0
+  //nya.addARMarker("patt.kanji", 80);//id=1
   nya.addNyIdMarker(358, 80); //id=358
   cam.start();
 
@@ -194,7 +195,7 @@ void detectMarker()
 
   marker_detected = false;
   for (int i=0; i<2; i++) {
-    if ((!nya.isExist(i))) {
+    if ((!nya.isExist(0))) {
       continue;
     }
     println("found marker"+ i);
