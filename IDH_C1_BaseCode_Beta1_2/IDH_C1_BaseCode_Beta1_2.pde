@@ -12,8 +12,12 @@ float SCALE = 0.5;
 PImage logo; 
 Gif myAnimation;
 DigitalClock digitalClock;
-FilmScreen screen1;
+
 HomeFeed home;
+FilmFeed1 feed1;
+FilmFeed2 feed2;
+FilmFeed3 feed3;
+
 
 float curTime, prevTime;
 
@@ -51,6 +55,9 @@ int bottom1;
 int state = 0;
 
 PImage fuji400; 
+PImage iro200; 
+PImage ilford400; 
+
 PImage[] Sfilm = new PImage[7];
 float x; 
 float y;
@@ -82,14 +89,14 @@ void setup() {
   stroke(255);
 
   home = new HomeFeed();
-  screen1 = new FilmScreen();
+  feed1 = new FilmFeed1();
+  feed2 = new FilmFeed2();
+  feed3 = new FilmFeed3();
 
   /* setup animation */
   myAnimation = new Gif(this, "test.gif");
   myAnimation.play();
 
-  // The font must be located in the sketch's 
-  // "data" directory to load successfully
   font1 = loadFont("PTSans-Regular-48.vlw");
   font2 = loadFont("FuturaPT-Heavy-48.vlw");
 
@@ -101,7 +108,9 @@ void setup() {
   println(MultiMarker.VERSION);
   cam=new Capture(this, camW, camH);
   nya=new MultiMarker(this, width, height, "camera_para.dat", NyAR4PsgConfig.CONFIG_PSG);
-  nya.addNyIdMarker(358, 80); //id=358
+  //nya.addNyIdMarker(158, 80); //id=158
+  //nya.addNyIdMarker(253, 90); //id=253
+  nya.addNyIdMarker(358, 100); //id=358
   cam.start();
 
   /* strip setup */
@@ -117,6 +126,9 @@ void setup() {
     SfilmSpeed = 0.6;
   }
 }
+
+//iro200 = loadImage("iro200logo.jpg");
+//ilford400 = loadImage("ilford400logo.jpg");
 
 //------------------------------------------------------------drawClock
 void drawClock()
@@ -134,7 +146,7 @@ void drawScreens() {
   } else
     if (state == 1)
     {
-      screen1.draw();
+      feed1.draw();
     }
 }
 

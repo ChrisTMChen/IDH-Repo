@@ -13,7 +13,7 @@ class HomeFeed {
 
     textFont(font2, heading);
     fill(251, 207, 24);
-    text("feed", left1, top);
+    text("home feed", left1, top);
 
   image(myAnimation, 650, 250);
   

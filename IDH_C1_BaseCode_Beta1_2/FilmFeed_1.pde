@@ -1,7 +1,7 @@
-class FilmScreen {
+class FilmFeed1 {
   PFont font;
 
-  FilmScreen() {
+  FilmFeed1() {
     font = loadFont("FuturaPT-Heavy-48.vlw");
   }
 
