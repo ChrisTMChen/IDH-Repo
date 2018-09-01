@@ -59,7 +59,7 @@ PImage iro200;
 PImage ilford400; 
 
 PImage[] Sfilm = new PImage[7];
-float x; 
+float x;
 float y;
 float SfilmSpacing;
 float SfilmStripLength;
@@ -109,8 +109,8 @@ void setup() {
   cam=new Capture(this, camW, camH);
   nya=new MultiMarker(this, width, height, "camera_para.dat", NyAR4PsgConfig.CONFIG_PSG);
   //nya.addNyIdMarker(158, 80); //id=158
-  //nya.addNyIdMarker(253, 90); //id=253
-  nya.addNyIdMarker(358, 100); //id=358
+  //nya.addNyIdMarker(253, 80); //id=253
+  nya.addNyIdMarker(358, 80); //id=358
   cam.start();
 
   /* strip setup */
