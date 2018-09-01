@@ -15,7 +15,7 @@ class HomeFeed {
     fill(251, 207, 24);
     text("feed", left1, top);
 
-  image(myAnimation, xcentre/2, ycentre/2, xcentre, ycentre);
+  image(myAnimation, 650, 250);
   
     }
   }

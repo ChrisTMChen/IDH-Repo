@@ -19,7 +19,7 @@ class FilmScreen {
 
     x = x + SfilmSpeed;
     for (int i = 0; i < Sfilm.length; i++) { 
-      image(Sfilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h, y - y/9 );
+      image(Sfilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h, y - y/10 );
     }
   }
 }

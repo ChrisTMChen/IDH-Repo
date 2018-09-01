@@ -101,8 +101,6 @@ void setup() {
   println(MultiMarker.VERSION);
   cam=new Capture(this, camW, camH);
   nya=new MultiMarker(this, width, height, "camera_para.dat", NyAR4PsgConfig.CONFIG_PSG);
-  //nya.addARMarker("patt.hiro", 80);//id=0
-  //nya.addARMarker("patt.kanji", 80);//id=1
   nya.addNyIdMarker(358, 80); //id=358
   cam.start();
 
@@ -110,13 +108,13 @@ void setup() {
   fuji400 = loadImage("fuji400logo.jpg");
   { 
     for (int i = 0; i < Sfilm.length; i++) { 
-      (Sfilm[i] = loadImage("Sfilm"+i+".jpg")).resize(w/2, h/2);
+      (Sfilm[i] = loadImage("Sfilm"+i+".jpg")).resize (800, 534);
     }
     y=ycentre/2;
     x=xcentre;
-    SfilmSpacing = w/2;
+    SfilmSpacing = height/1.32;
     SfilmStripLength = SfilmSpacing*Sfilm.length;
-    SfilmSpeed = 1;
+    SfilmSpeed = 0.6;
   }
 }
 
