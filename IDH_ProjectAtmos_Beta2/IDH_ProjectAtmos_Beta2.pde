@@ -22,6 +22,7 @@ FilmFeed3 feed3;
 float curTime, prevTime;
 
 int timeOut = 3000;
+int time = millis();
 
 //sizes
 int w = 1920; //--------------------<set w
@@ -210,8 +211,7 @@ void draw() {
 }
 
 //------------------------------------------------------------detectMarker
-void detectMarker()
-{
+void detectMarker() {
 
   updateTimer();
 
