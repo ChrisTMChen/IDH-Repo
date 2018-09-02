@@ -58,9 +58,9 @@ PImage fuji400;
 PImage iro200; 
 PImage ilford400; 
 
-PImage[] Sfilm = new PImage[7];
-PImage[] UFStrip = new PImage[7];
-PImage[] LFStrip = new PImage[7];
+PImage[] Sfilm = new PImage[11];
+PImage[] UFStrip = new PImage[11];
+PImage[] LFStrip = new PImage[11];
 
 float x;
 float y;
@@ -97,7 +97,7 @@ void setup() {
   xcentre = w/2;
   ycentre = h/2;
 
-  logo = loadImage("cornerlogo.jpg");
+  logo = loadImage("FNDlogo.jpg");
   stroke(255);
 
   home = new HomeFeed();
@@ -129,10 +129,12 @@ void setup() {
   cam.start();
 
   /* strip setup */
+  iro200 = loadImage("iro200logo.jpg");
   fuji400 = loadImage("fuji400logo.jpg");
+  ilford400 = loadImage("ilford400logo.jpg");
   { 
     for (int i = 0; i < Sfilm.length; i++) { 
-      (Sfilm[i] = loadImage("Sfilm"+i+".jpg")).resize (800, 534);
+      (Sfilm[i] = loadImage("IroFilm-"+i+".jpg")).resize (800, 534);
     }
     y=ycentre/2;
     x=xcentre;
@@ -143,8 +145,8 @@ void setup() {
 
   size(1920, 1080);
   for (int i = 0; i < UFStrip.length; i++) { 
-    (UFStrip[i] = loadImage("Sfilm"+i+".jpg")).resize (500, 333);
-    (LFStrip[i] = loadImage("Tfilm"+i+".jpg")).resize (500, 333);
+    (UFStrip[i] = loadImage("IroFilm-"+i+".jpg")).resize (500, 333);
+    (LFStrip[i] = loadImage("IlfordFilm-"+i+".jpg")).resize (500, 333);
   }
   y=ycentre/2;
   x=xcentre;
@@ -153,8 +155,7 @@ void setup() {
   HStripSpeed = 0.8;
 }
 
-//iro200 = loadImage("iro200logo.jpg");
-//ilford400 = loadImage("ilford400logo.jpg");
+
 
 
 //------------------------------------------update
