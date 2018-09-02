@@ -59,11 +59,18 @@ PImage iro200;
 PImage ilford400; 
 
 PImage[] Sfilm = new PImage[7];
+PImage[] UFStrip = new PImage[7];
+PImage[] LFStrip = new PImage[7];
+
 float x;
 float y;
 float SfilmSpacing;
 float SfilmStripLength;
 float SfilmSpeed;
+
+float HStripSpacing;
+float HStripStripLength;
+float HStripSpeed;
 
 //------------------------------------------------------------setup
 void setup() {
@@ -125,6 +132,17 @@ void setup() {
     SfilmStripLength = SfilmSpacing*Sfilm.length;
     SfilmSpeed = 0.6;
   }
+
+  size(1920, 1080);
+  for (int i = 0; i < UFStrip.length; i++) { 
+    (UFStrip[i] = loadImage("Sfilm"+i+".jpg")).resize (500, 333);
+    (LFStrip[i] = loadImage("Tfilm"+i+".jpg")).resize (500, 333);
+  }
+  y=ycentre/2;
+  x=xcentre;
+  HStripSpacing = height/2.13;
+  HStripStripLength = HStripSpacing*UFStrip.length;
+  HStripSpeed = 0.8;
 }
 
 //iro200 = loadImage("iro200logo.jpg");

@@ -15,7 +15,12 @@ class HomeFeed {
     fill(251, 207, 24);
     text("home feed", left1, top);
 
-  image(myAnimation, 650, 250);
-  
+    image(myAnimation, 650, 250);
+
+    x = x + HStripSpeed;
+    for (int i = 0; i < UFStrip.length; i++) { 
+      image(UFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h, 200 );
+      image(LFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h, 540 );
     }
   }
+}
