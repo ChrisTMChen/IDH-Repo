@@ -1,11 +1,13 @@
 class HomeFeed {
   PFont font;
 
+int _display;
+
   HomeFeed() {
     font = loadFont("FuturaPT-Heavy-48.vlw");
   }
 
-  void draw() {
+  void draw(int _display) {
 
     fill(255);
     textFont(font1, body);
@@ -15,12 +17,22 @@ class HomeFeed {
     fill(251, 207, 24);
     text("home feed", left1, top);
 
-    image(myAnimation, 650, 250);
 
-    x = x + HStripSpeed;
+  if (display == 1){
+    //feed1.draw();
+   x = x + HStripSpeed;
     for (int i = 0; i < UFStrip.length; i++) { 
       image(UFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h, 200 );
-      image(LFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h, 540 );
-    }
+      image(LFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h, 540 );  
+}
+  }
+  else if (display == 0)
+  {
+    //home.draw(display);
+
+
+    image(myAnimation, 650, 250);  
+
+  }
   }
 }

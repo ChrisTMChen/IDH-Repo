@@ -27,8 +27,8 @@ int time = millis();
 //sizes
 int w = 1920; //--------------------<set w
 int h = 1080; //---------------------<set h
-int camW = 1920; //--------------------<set camera resolution
-int camH = 1080; //----------------------<set camera resolution
+int camW = 640;//1920; //--------------------<set camera resolution
+int camH = 480;//1080; //----------------------<set camera resolution
 
 //int w = 1280; //--------------------<set w
 //int h = 720; //---------------------<set h
@@ -73,6 +73,10 @@ float HStripSpacing;
 float HStripStripLength;
 float HStripSpeed;
 
+float frame;
+float reset;
+int display;
+
 //------------------------------------------------------------setup
 void setup() {
   size(1920, 1080, P3D); //needs 16:9
@@ -108,6 +112,10 @@ void setup() {
   font1 = loadFont("PTSans-Regular-48.vlw");
   font2 = loadFont("FuturaPT-Heavy-48.vlw");
 
+
+  frame = 0;
+  display=0;
+  reset = 0;
 
   /* setup clock */
   digitalClock = new DigitalClock(40); 
@@ -156,19 +164,36 @@ void drawClock()
   digitalClock.display(w, h);
 }
 
+//-----------------------------------------------HomeScreenTimers
+void timers(){
+
+  println("timer");
+  frame = frame + 0.005;
+  
+  if (frame >= 1){
+    display = 1;
+    println("reset");
+      if (frame >= 2){
+      display = 0;
+      reset = frame;
+      frame = frame - reset;
+      }
+  }
+}
+
 //------------------------------------------------------------drawScreens
 void drawScreens() {
 
   if (state == 0)
-  {
-    home.draw();
+  {   
+    home.draw(display);
   } else
-    if (state == 1)
-    {
-      feed1.draw();
-    }
+ 
+  if (state == 1)
+   {
+     feed1.draw();
+   }
 }
-
 
 //------------------------------------------------------------updateState
 void updateState() {
@@ -199,15 +224,17 @@ void updateTimer() {
 //------------------------------------------------------------Draw
 void draw() {
 
-  //println(frameRate);
+  //frame.setTitle(str(frameRate));
   background(47, 54, 64);
+ 
   image(logo, 0, 980);
+  
 
   detectMarker();
   updateState();
-
   drawClock();  
   drawScreens();
+  timers();
 }
 
 //------------------------------------------------------------detectMarker
