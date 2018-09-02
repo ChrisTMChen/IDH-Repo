@@ -201,9 +201,9 @@ void timers(){
 
   frame = frame + 0.005; // change for home toggle duration
   
-  if (frame >= 1){
+  if (frame >= 2){
     display = 1;
-    if (frame >= 2){
+    if (frame >= 6){
       display = 0;
       reset = frame;
       frame = frame - reset;
