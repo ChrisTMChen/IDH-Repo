@@ -18,16 +18,16 @@ FilmFeed1 feed1;
 FilmFeed2 feed2;
 FilmFeed3 feed3;
 
-
 float curTime, prevTime;
 
 int timeOut = 3000;
+int time = millis();
 
 //sizes
 int w = 1920; //--------------------<set w
 int h = 1080; //---------------------<set h
-int camW = 1920; //--------------------<set camera resolution
-int camH = 1080; //----------------------<set camera resolution
+int camW = 640;//1920; //--------------------<set camera resolution
+int camH = 480;//1080; //----------------------<set camera resolution
 
 //int w = 1280; //--------------------<set w
 //int h = 720; //---------------------<set h
@@ -59,11 +59,23 @@ PImage iro200;
 PImage ilford400; 
 
 PImage[] Sfilm = new PImage[7];
+PImage[] UFStrip = new PImage[7];
+PImage[] LFStrip = new PImage[7];
+
 float x;
 float y;
 float SfilmSpacing;
 float SfilmStripLength;
 float SfilmSpeed;
+
+float HStripSpacing;
+float HStripStripLength;
+float HStripSpeed;
+
+float frame;
+float reset;
+int display;
+float frameC;
 
 //------------------------------------------------------------setup
 void setup() {
@@ -99,7 +111,10 @@ void setup() {
 
   font1 = loadFont("PTSans-Regular-48.vlw");
   font2 = loadFont("FuturaPT-Heavy-48.vlw");
-
+  
+  frame = 0;
+  display=0;
+  reset = 0;
 
   /* setup clock */
   digitalClock = new DigitalClock(40); 
@@ -125,10 +140,53 @@ void setup() {
     SfilmStripLength = SfilmSpacing*Sfilm.length;
     SfilmSpeed = 0.6;
   }
+
+  size(1920, 1080);
+  for (int i = 0; i < UFStrip.length; i++) { 
+    (UFStrip[i] = loadImage("Sfilm"+i+".jpg")).resize (500, 333);
+    (LFStrip[i] = loadImage("Tfilm"+i+".jpg")).resize (500, 333);
+  }
+  y=ycentre/2;
+  x=xcentre;
+  HStripSpacing = height/2.13;
+  HStripStripLength = HStripSpacing*UFStrip.length;
+  HStripSpeed = 0.8;
 }
 
 //iro200 = loadImage("iro200logo.jpg");
 //ilford400 = loadImage("ilford400logo.jpg");
+
+
+//------------------------------------------update
+void update(){
+}
+
+
+//------------------------------------------------------------draw
+void draw() {
+
+  //frame.setTitle("" + frameCount);
+  
+  background(47, 54, 64);
+  logos(); //draw logos
+  drawClock();
+  
+  detectMarker(); // look for marker
+  updateState(); 
+  drawScreens(); // select screen
+
+}
+
+
+//------------------------------------------logos
+void logos(){
+
+
+  image(logo, 0, 980);
+  
+  
+  
+}
 
 //------------------------------------------------------------drawClock
 void drawClock()
@@ -137,19 +195,35 @@ void drawClock()
   digitalClock.display(w, h);
 }
 
+//-----------------------------------------------HomeScreenTimers
+void timers(){
+
+  frame = frame + 0.005; // change for home toggle duration
+  
+  if (frame >= 1){
+    display = 1;
+    if (frame >= 2){
+      display = 0;
+      reset = frame;
+      frame = frame - reset;
+      }
+  }
+}
+
 //------------------------------------------------------------drawScreens
 void drawScreens() {
 
   if (state == 0)
-  {
-    home.draw();
+  {   
+    timers();
+    home.draw(display);
   } else
-    if (state == 1)
-    {
-      feed1.draw();
-    }
+ 
+  if (state == 1)
+   {
+     feed1.draw();
+   }
 }
-
 
 //------------------------------------------------------------updateState
 void updateState() {
@@ -177,23 +251,9 @@ void updateTimer() {
   }
 }
 
-//------------------------------------------------------------Draw
-void draw() {
-
-  //println(frameRate);
-  background(47, 54, 64);
-  image(logo, 0, 980);
-
-  detectMarker();
-  updateState();
-
-  drawClock();  
-  drawScreens();
-}
 
 //------------------------------------------------------------detectMarker
-void detectMarker()
-{
+void detectMarker() {
 
   updateTimer();
 
