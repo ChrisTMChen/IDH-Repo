@@ -19,8 +19,8 @@ class HomeFeed {
 
     x = x + HStripSpeed;
     for (int i = 0; i < UFStrip.length; i++) { 
-      image(UFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h, 200 );
-      image(LFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h, 540 );
+      image(UFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h+1000, 200 );
+      image(LFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h+1000, 540 );
     }
   }
 }
