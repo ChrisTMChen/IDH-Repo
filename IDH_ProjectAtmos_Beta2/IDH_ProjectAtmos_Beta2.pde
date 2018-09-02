@@ -5,7 +5,7 @@ import jp.nyatla.nyar4psg.*;
 
 Capture cam;
 MultiMarker nya;
-boolean marker_detected = false;
+boolean marker358_detected = false;
 PFont font1, font2;
 
 float SCALE = 0.5;
@@ -26,13 +26,13 @@ int time = millis();
 //sizes
 int w = 1920; //--------------------<set w
 int h = 1080; //---------------------<set h
-int camW = 640;//1920; //--------------------<set camera resolution
-int camH = 480;//1080; //----------------------<set camera resolution
+int camW = 1920; //--------------------<set camera resolution
+int camH = 1080; //----------------------<set camera resolution
 
 //int w = 1280; //--------------------<set w
 //int h = 720; //---------------------<set h
-//int camW = 1280; //--------------------<set camera resolution
-//int camH = 720; //----------------------<set camera resolution
+//int camW = 640; //--------------------<set camera resolution
+//int camH = 480; //----------------------<set camera resolution
 
 //font sizes
 int heading;
@@ -111,7 +111,7 @@ void setup() {
 
   font1 = loadFont("PTSans-Regular-48.vlw");
   font2 = loadFont("FuturaPT-Heavy-48.vlw");
-  
+
   frame = 0;
   display=0;
   reset = 0;
@@ -152,14 +152,14 @@ void setup() {
   x=xcentre;
   HStripSpacing = height/2.13;
   HStripStripLength = HStripSpacing*UFStrip.length;
-  HStripSpeed = 0.8;
+  HStripSpeed = 0.5;
 }
 
 
 
 
 //------------------------------------------update
-void update(){
+void update() {
 }
 
 
@@ -167,26 +167,22 @@ void update(){
 void draw() {
 
   //frame.setTitle("" + frameCount);
-  
+
   background(47, 54, 64);
   logos(); //draw logos
   drawClock();
-  
-  detectMarker(); // look for marker
+
+  detectMarker1(); // look for marker
   updateState(); 
   drawScreens(); // select screen
-
 }
 
 
 //------------------------------------------logos
-void logos(){
+void logos() {
 
 
   image(logo, 0, 980);
-  
-  
-  
 }
 
 //------------------------------------------------------------drawClock
@@ -197,17 +193,17 @@ void drawClock()
 }
 
 //-----------------------------------------------HomeScreenTimers
-void timers(){
+void timers() {
 
   frame = frame + 0.005; // change for home toggle duration
-  
-  if (frame >= 2){
+
+  if (frame >= 2) {
     display = 1;
-    if (frame >= 6){
+    if (frame >= 6) {
       display = 0;
       reset = frame;
       frame = frame - reset;
-      }
+    }
   }
 }
 
@@ -219,42 +215,43 @@ void drawScreens() {
     timers();
     home.draw(display);
   } else
- 
-  if (state == 1)
-   {
-     feed1.draw();
-   }
+
+    if (state == 1)
+    {
+      feed1.draw();
+    }
 }
 
 //------------------------------------------------------------updateState
 void updateState() {
 
-  if ((state == 0) && (marker_detected == true)) {
+  if ((state == 0) && (marker358_detected == true)) {
     state = 1;
   }
 }
 
 //------------------------------------------------------------startTimer
 void startTimer() {
-  // reset timer
+
   prevTime = curTime = millis();
 }
 
 //------------------------------------------------------------updateTimer
 void updateTimer() {
+
   curTime = millis();
   if ((curTime - prevTime) > timeOut)
   {
     println("marker timed out!");
-    marker_detected = false;
+    marker358_detected = false;
     state = 0;
     println("reset timer");
   }
 }
 
 
-//------------------------------------------------------------detectMarker
-void detectMarker() {
+//------------------------------------------------------------detectMarker358
+void detectMarker1() {
 
   updateTimer();
 
@@ -264,13 +261,14 @@ void detectMarker() {
   cam.read();
   nya.detect(cam);
 
-  marker_detected = false;
+  marker358_detected = false;
   for (int i=0; i<2; i++) {
     if ((!nya.isExist(0))) {
       continue;
     }
+    
     println("found marker"+ i);
-    marker_detected = true;
+    marker358_detected = true;
 
     startTimer();
   }
