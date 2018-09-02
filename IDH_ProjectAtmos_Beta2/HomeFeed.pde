@@ -19,20 +19,15 @@ int _display;
 
 
   if (display == 1){
-    //feed1.draw();
    x = x + HStripSpeed;
     for (int i = 0; i < UFStrip.length; i++) { 
       image(UFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h, 200 );
       image(LFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h, 540 );  
-}
+    }
   }
   else if (display == 0)
   {
-    //home.draw(display);
-
-
     image(myAnimation, 650, 250);  
-
   }
   }
 }

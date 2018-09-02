@@ -18,7 +18,6 @@ FilmFeed1 feed1;
 FilmFeed2 feed2;
 FilmFeed3 feed3;
 
-
 float curTime, prevTime;
 
 int timeOut = 3000;
@@ -76,6 +75,7 @@ float HStripSpeed;
 float frame;
 float reset;
 int display;
+float frameC;
 
 //------------------------------------------------------------setup
 void setup() {
@@ -111,8 +111,7 @@ void setup() {
 
   font1 = loadFont("PTSans-Regular-48.vlw");
   font2 = loadFont("FuturaPT-Heavy-48.vlw");
-
-
+  
   frame = 0;
   display=0;
   reset = 0;
@@ -157,6 +156,38 @@ void setup() {
 //iro200 = loadImage("iro200logo.jpg");
 //ilford400 = loadImage("ilford400logo.jpg");
 
+
+//------------------------------------------update
+void update(){
+}
+
+
+//------------------------------------------------------------draw
+void draw() {
+
+  //frame.setTitle("" + frameCount);
+  
+  background(47, 54, 64);
+  logos(); //draw logos
+  drawClock();
+  
+  detectMarker(); // look for marker
+  updateState(); 
+  drawScreens(); // select screen
+
+}
+
+
+//------------------------------------------logos
+void logos(){
+
+
+  image(logo, 0, 980);
+  
+  
+  
+}
+
 //------------------------------------------------------------drawClock
 void drawClock()
 {
@@ -167,13 +198,11 @@ void drawClock()
 //-----------------------------------------------HomeScreenTimers
 void timers(){
 
-  println("timer");
-  frame = frame + 0.005;
+  frame = frame + 0.005; // change for home toggle duration
   
   if (frame >= 1){
     display = 1;
-    println("reset");
-      if (frame >= 2){
+    if (frame >= 2){
       display = 0;
       reset = frame;
       frame = frame - reset;
@@ -186,6 +215,7 @@ void drawScreens() {
 
   if (state == 0)
   {   
+    timers();
     home.draw(display);
   } else
  
@@ -221,21 +251,6 @@ void updateTimer() {
   }
 }
 
-//------------------------------------------------------------Draw
-void draw() {
-
-  //frame.setTitle(str(frameRate));
-  background(47, 54, 64);
- 
-  image(logo, 0, 980);
-  
-
-  detectMarker();
-  updateState();
-  drawClock();  
-  drawScreens();
-  timers();
-}
 
 //------------------------------------------------------------detectMarker
 void detectMarker() {
