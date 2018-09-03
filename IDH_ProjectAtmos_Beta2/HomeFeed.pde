@@ -18,14 +18,14 @@ int _display;
     text("public feed", left1, top);
 
 
-  if (display == 1){
+  if (_display == 1){
    x = x + HStripSpeed;
     for (int i = 0; i < UFStrip.length; i++) { 
       image(UFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h+1000, 200 );
       image(LFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h+1000, 540 );
     }
   }
-  else if (display == 0)
+  else if (_display == 0)
   {
     image(myAnimation, 650, 250);  
   }
