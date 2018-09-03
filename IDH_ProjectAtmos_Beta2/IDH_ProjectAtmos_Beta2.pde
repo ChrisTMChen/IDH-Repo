@@ -31,11 +31,6 @@ int h = 1080; //---------------------<set h
 int camW = 1920; //--------------------<set camera resolution
 int camH = 1080; //----------------------<set camera resolution
 
-//int w = 1280; //--------------------<set w
-//int h = 720; //---------------------<set h
-//int camW = 640; //--------------------<set camera resolution
-//int camH = 480; //----------------------<set camera resolution
-
 //font sizes
 int heading;
 int body;
@@ -77,13 +72,11 @@ float HStripSpeed;
 float frame;
 float reset;
 int display;
-float frameC;
 
 //------------------------------------------------------------setup
 void setup() {
   size(1920, 1080, P3D); //needs 16:9
-  //size(1280, 720, P3D); //needs 16:9
-
+  //size(1280, 720, P2D); //needs 16:9
 
   textAlign(LEFT);
   heading = h/15;
@@ -145,8 +138,7 @@ void setup() {
     SfilmStripLength = SfilmSpacing*Sfilm.length;
     SfilmSpeed = 0.6;
   }
-
-  size(1920, 1080);
+  
   for (int i = 0; i < UFStrip.length; i++) { 
     (UFStrip[i] = loadImage("IroFilm-"+i+".jpg")).resize (500, 333);
     (LFStrip[i] = loadImage("IlfordFilm-"+i+".jpg")).resize (500, 333);
@@ -158,20 +150,17 @@ void setup() {
   HStripSpeed = 0.5;
 }
 
-
-
-
 //------------------------------------------update
 void update() {
+println(frameRate);
 }
 
 
 //------------------------------------------------------------draw
 void draw() {
 
-  //frame.setTitle("" + frameCount);
-
   background(47, 54, 64);
+  update();
   logos(); //draw logos
   drawClock();
 
@@ -180,11 +169,8 @@ void draw() {
   drawScreens(); // select screen
 }
 
-
 //------------------------------------------logos
 void logos() {
-
-
   image(logo, 0, 980);
 }
 
@@ -218,15 +204,12 @@ void drawScreens() {
     home.draw(display);
     break;
   case 1:
-    timers();
     feed1.draw();
     break;
   case 2:
-    timers();
     feed2.draw();
     break;
   case 3:
-    timers();
     feed3.draw();
     break;
   default:
@@ -234,18 +217,6 @@ void drawScreens() {
     home.draw(display);
     break;
   }
-
-
-  if (state == 0)
-  {   
-    timers();
-    home.draw(display);
-  } else
-
-    if (state == 1)
-    {
-      feed1.draw();
-    }
 }
 
 //------------------------------------------------------------updateState
@@ -275,7 +246,7 @@ void updateTimer() {
       markerDetected[i] = false;
     }
     state = 0;
-    println("reset timer");
+    //println("reset timer");
   }
 }
 
