@@ -15,7 +15,7 @@ int _display;
 
     textFont(font2, heading);
     fill(251, 207, 24);
-    text("home feed", left1, top);
+    text("public feed", left1, top);
 
 
   if (display == 1){

@@ -17,9 +17,9 @@ class FilmFeed3 {
     
     image(ilford400, 0, 840);
 
-    //x = x + SfilmSpeed;
-    //for (int i = 0; i < Sfilm.length; i++) { 
-    //  image(Sfilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h, y - y/10 );
-    //}
+    x = x + SfilmSpeed;
+    for (int i = 0; i < Ilfordfilm.length; i++) { 
+      image(Ilfordfilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h+1000, y - y/10 );
+    }
   }
 }
