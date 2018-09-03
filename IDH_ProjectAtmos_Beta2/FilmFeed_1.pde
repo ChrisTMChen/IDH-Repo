@@ -15,11 +15,11 @@ class FilmFeed1 {
     fill(251, 207, 24);
     text("film feed", left1, top);
     
-    image(iro200, 0, 840);
+    image(iro200, 0, 845);
 
     x = x + SfilmSpeed;
     for (int i = 0; i < Irofilm.length; i++) {
-      image(Irofilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h+1000, y - y/10 );
+      image(Irofilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h+1000, 140 );
     }
   }
 }

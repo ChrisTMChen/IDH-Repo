@@ -141,27 +141,27 @@ void setup() {
   ilford400 = loadImage("ilford400logo.jpg");
   { 
     for (int i = 0; i < Sfilm.length; i++) { 
-      (Irofilm[i] = loadImage("IroFilm-"+i+".jpg")).resize (800, 534);
-      (Fujifilm[i] = loadImage("FujiFilm-"+i+".jpg")).resize (800, 534);
-      (Ilfordfilm[i] = loadImage("IlfordFilm-"+i+".jpg")).resize (800, 534);
+      (Irofilm[i] = loadImage("IroFilm-"+i+".jpg")).resize (1000, 667);
+      (Fujifilm[i] = loadImage("FujiFilm-"+i+".jpg")).resize (1000, 667);
+      (Ilfordfilm[i] = loadImage("IlfordFilm-"+i+".jpg")).resize (1000, 667);
     }
     y=ycentre/2;
     x=xcentre;
-    SfilmSpacing = height/1.32;
+    SfilmSpacing = height/1.07;
     SfilmStripLength = SfilmSpacing*Sfilm.length;
     SfilmSpeed = 0.6;
   }
 
-  size(1920, 1080);
   for (int i = 0; i < UFStrip.length; i++) { 
-    (UFStrip[i] = loadImage("IroFilm-"+i+".jpg")).resize (500, 333);
-    (LFStrip[i] = loadImage("IlfordFilm-"+i+".jpg")).resize (500, 333);
+    (UFStrip[i] = loadImage("UFStrip-"+i+".jpg")).resize (600, 400);
+    (LFStrip[i] = loadImage("LFStrip-"+i+".jpg")).resize (600, 400);
   }
   y=ycentre/2;
   x=xcentre;
-  HStripSpacing = height/2.13;
+  HStripSpacing = height/1.767;
   HStripStripLength = HStripSpacing*UFStrip.length;
   HStripSpeed = 0.5;
+
 }
 
 

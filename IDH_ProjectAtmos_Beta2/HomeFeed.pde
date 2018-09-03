@@ -21,8 +21,8 @@ int _display;
   if (display == 1){
    x = x + HStripSpeed;
     for (int i = 0; i < UFStrip.length; i++) { 
-      image(UFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h+1000, 200 );
-      image(LFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h+1000, 540 );
+      image(UFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h+1000, 140 );
+      image(LFStrip[i], - (x + i * HStripSpacing) % HStripStripLength + h+1000, 550 );
     }
   }
   else if (display == 0)
