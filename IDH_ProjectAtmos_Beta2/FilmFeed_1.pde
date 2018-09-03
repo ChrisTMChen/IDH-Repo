@@ -18,8 +18,8 @@ class FilmFeed1 {
     image(iro200, 0, 840);
 
     x = x + SfilmSpeed;
-    for (int i = 0; i < Sfilm.length; i++) { 
-      image(Sfilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h+1000, y - y/10 );
+    for (int i = 0; i < Irofilm.length; i++) {
+      image(Irofilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h+1000, y - y/10 );
     }
   }
 }

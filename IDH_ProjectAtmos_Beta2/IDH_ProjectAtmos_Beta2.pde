@@ -5,8 +5,7 @@ import jp.nyatla.nyar4psg.*;
 
 Capture cam;
 MultiMarker nya;
-//boolean marker358_detected = false;
-int numMarkers = 3;
+int numMarkers = 4;
 Boolean[] markerDetected = new Boolean[numMarkers];
 PFont font1, font2;
 
@@ -19,6 +18,7 @@ HomeFeed home;
 FilmFeed1 feed1;
 FilmFeed2 feed2;
 FilmFeed3 feed3;
+CameraFeed1 feed4;
 
 float curTime, prevTime;
 
@@ -56,6 +56,9 @@ PImage iro200;
 PImage ilford400; 
 
 PImage[] Sfilm = new PImage[11];
+PImage[] Ilfordfilm = new PImage[11];
+PImage[] Irofilm = new PImage[11];
+PImage[] Fujifilm = new PImage[11];
 PImage[] UFStrip = new PImage[11];
 PImage[] LFStrip = new PImage[11];
 
@@ -75,8 +78,10 @@ int display;
 
 //------------------------------------------------------------setup
 void setup() {
-  size(1920, 1080, P3D); //needs 16:9
+  //size(1920, 1080, P3D); //needs 16:9
+  size(1920, 1080, P2D); //needs 16:9
   //size(1280, 720, P2D); //needs 16:9
+  //size(1280, 720, P3D); //needs 16:9
 
   textAlign(LEFT);
   heading = h/15;
@@ -99,6 +104,7 @@ void setup() {
   feed1 = new FilmFeed1();
   feed2 = new FilmFeed2();
   feed3 = new FilmFeed3();
+  feed4 = new CameraFeed1();
 
   /* setup animation */
   myAnimation = new Gif(this, "test.gif");
@@ -121,6 +127,7 @@ void setup() {
   nya.addNyIdMarker(358, 80); //id=358
   nya.addNyIdMarker(158, 80); //id=158
   nya.addNyIdMarker(253, 80); //id=253
+  nya.addNyIdMarker(365, 80); //id=365
 
   cam.start();
 
@@ -130,7 +137,9 @@ void setup() {
   ilford400 = loadImage("ilford400logo.jpg");
   { 
     for (int i = 0; i < Sfilm.length; i++) { 
-      (Sfilm[i] = loadImage("IroFilm-"+i+".jpg")).resize (800, 534);
+      (Irofilm[i] = loadImage("IroFilm-"+i+".jpg")).resize (800, 534);
+      (Fujifilm[i] = loadImage("FujiFilm-"+i+".jpg")).resize (800, 534);
+      (Ilfordfilm[i] = loadImage("IlfordFilm-"+i+".jpg")).resize (800, 534);
     }
     y=ycentre/2;
     x=xcentre;
@@ -199,10 +208,12 @@ void timers() {
 //------------------------------------------------------------drawScreens
 void drawScreens() {
   switch(state) {
+
   case 0:
     timers();
     home.draw(display);
     break;
+
   case 1:
     feed1.draw();
     break;
@@ -212,6 +223,12 @@ void drawScreens() {
   case 3:
     feed3.draw();
     break;
+
+  case 4:
+    timers();
+    feed4.draw();
+    break;
+
   default:
     timers();
     home.draw(display);
