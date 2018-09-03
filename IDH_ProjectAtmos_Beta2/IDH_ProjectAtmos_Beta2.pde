@@ -5,7 +5,9 @@ import jp.nyatla.nyar4psg.*;
 
 Capture cam;
 MultiMarker nya;
-boolean marker358_detected = false;
+//boolean marker358_detected = false;
+int numMarkers = 3;
+Boolean[] markerDetected = new Boolean[numMarkers];
 PFont font1, font2;
 
 float SCALE = 0.5;
@@ -123,9 +125,10 @@ void setup() {
   println(MultiMarker.VERSION);
   cam=new Capture(this, camW, camH);
   nya=new MultiMarker(this, width, height, "camera_para.dat", NyAR4PsgConfig.CONFIG_PSG);
-  //nya.addNyIdMarker(158, 80); //id=158
-  //nya.addNyIdMarker(253, 80); //id=253
   nya.addNyIdMarker(358, 80); //id=358
+  nya.addNyIdMarker(158, 80); //id=158
+  nya.addNyIdMarker(253, 80); //id=253
+
   cam.start();
 
   /* strip setup */
@@ -172,7 +175,7 @@ void draw() {
   logos(); //draw logos
   drawClock();
 
-  detectMarker1(); // look for marker
+  detectMarker(); // look for marker
   updateState(); 
   drawScreens(); // select screen
 }
@@ -209,6 +212,29 @@ void timers() {
 
 //------------------------------------------------------------drawScreens
 void drawScreens() {
+  switch(state) {
+  case 0:
+    timers();
+    home.draw(display);
+    break;
+  case 1:
+    timers();
+    feed1.draw();
+    break;
+  case 2:
+    timers();
+    feed2.draw();
+    break;
+  case 3:
+    timers();
+    feed3.draw();
+    break;
+  default:
+    timers();
+    home.draw(display);
+    break;
+  }
+
 
   if (state == 0)
   {   
@@ -224,9 +250,11 @@ void drawScreens() {
 
 //------------------------------------------------------------updateState
 void updateState() {
-
-  if ((state == 0) && (marker358_detected == true)) {
-    state = 1;
+  if (state != 0) return;
+  state = 0;
+  for (int i = 0; i < markerDetected.length; i++) {
+    if (markerDetected[i])
+      state = 1+i;
   }
 }
 
@@ -243,7 +271,9 @@ void updateTimer() {
   if ((curTime - prevTime) > timeOut)
   {
     println("marker timed out!");
-    marker358_detected = false;
+    for (int i = 0; i < markerDetected.length; i++) {
+      markerDetected[i] = false;
+    }
     state = 0;
     println("reset timer");
   }
@@ -251,7 +281,7 @@ void updateTimer() {
 
 
 //------------------------------------------------------------detectMarker358
-void detectMarker1() {
+void detectMarker() {
 
   updateTimer();
 
@@ -261,15 +291,13 @@ void detectMarker1() {
   cam.read();
   nya.detect(cam);
 
-  marker358_detected = false;
-  for (int i=0; i<2; i++) {
-    if ((!nya.isExist(0))) {
-      continue;
+  for (int i=0; i < numMarkers; i++) {
+    if (nya.isExist(i)) {
+      markerDetected[i] = true;
+      println("found marker"+ i);
+      startTimer();
+    } else {
+      markerDetected[i] = false;
     }
-    
-    println("found marker"+ i);
-    marker358_detected = true;
-
-    startTimer();
   }
 }
