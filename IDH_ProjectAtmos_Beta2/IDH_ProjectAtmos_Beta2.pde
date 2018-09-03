@@ -147,11 +147,6 @@ void setup() {
     SfilmStripLength = SfilmSpacing*Sfilm.length;
     SfilmSpeed = 0.6;
   }
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> b6a67d696c1956ff6aff8ccf0b2c19292499d56c
   for (int i = 0; i < UFStrip.length; i++) { 
     (UFStrip[i] = loadImage("UFStrip-"+i+".jpg")).resize (600, 400);
     (LFStrip[i] = loadImage("LFStrip-"+i+".jpg")).resize (600, 400);
