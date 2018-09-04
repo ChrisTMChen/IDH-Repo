@@ -3,7 +3,6 @@ class CameraFeed1 {
 
   CameraFeed1() {
     font = loadFont("FuturaPT-Heavy-48.vlw");
-
   }
 
   void draw() {
@@ -17,10 +16,10 @@ class CameraFeed1 {
     text("camera feed", left1, top);
 
     //image(OlympusCam, 0, 840, 100, 100);
-      
-    //      x = x + SfilmSpeed;
-    //for (int i = 0; i < Irofilm.length; i++) {
-    //  image(Irofilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h+1000, y - y/10 );
+
+    //x = x + SfilmSpeed;
+    //for (int i = 0; i < Fujifilm.length; i++) { 
+    //  image(Fujifilm[i], - (x + i * SfilmSpacing) % SfilmStripLength + h+1000, 140);
     //}
   }
 }
