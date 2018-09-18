@@ -15,9 +15,9 @@ Gif myAnimation;
 DigitalClock digitalClock;
 
 HomeFeed home;
-FilmFeed1 feed1;
-FilmFeed2 feed2;
-FilmFeed3 feed3;
+Feed feed1;
+Feed feed2;
+Feed feed3;
 CameraFeed1 feed4;
 
 float curTime, prevTime;
@@ -55,10 +55,7 @@ PImage fuji400;
 PImage iro200; 
 PImage ilford400; 
 
-PImage[] Sfilm = new PImage[11];
-PImage[] Ilfordfilm = new PImage[11];
-PImage[] Irofilm = new PImage[11];
-PImage[] Fujifilm = new PImage[11];
+int numImages = 11;
 PImage[] UFStrip = new PImage[11];
 PImage[] LFStrip = new PImage[11];
 
@@ -101,9 +98,10 @@ void setup() {
   stroke(255);
 
   home = new HomeFeed();
-  feed1 = new FilmFeed1();
-  feed2 = new FilmFeed2();
-  feed3 = new FilmFeed3();
+  //feed1 = new FilmFeed1();
+  feed1 = new Feed("film feed","FilmNeverDie Iro 200","iro200logo.jpg");
+  feed2 = new Feed("film feed","Fujifilm industrial 400", "fuji400logo.jpg");
+  feed3 = new Feed("film feed","Fujifilm industrial 400","ilford400logo.jpg");
   feed4 = new CameraFeed1();
 
   /* setup animation */
@@ -132,19 +130,16 @@ void setup() {
   cam.start();
 
   /* strip setup */
-  iro200 = loadImage("iro200logo.jpg");
-  fuji400 = loadImage("fuji400logo.jpg");
-  ilford400 = loadImage("ilford400logo.jpg");
   { 
-    for (int i = 0; i < Sfilm.length; i++) { 
-      (Irofilm[i] = loadImage("IroFilm-"+i+".jpg")).resize (800, 534);
-      (Fujifilm[i] = loadImage("FujiFilm-"+i+".jpg")).resize (800, 534);
-      (Ilfordfilm[i] = loadImage("IlfordFilm-"+i+".jpg")).resize (800, 534);
+    for (int i = 0; i < numImages; i++) { 
+      feed1.addPhoto(new Photo("IroFilm-"+i+".jpg"));
+      feed2.addPhoto(new Photo("FujiFilm-"+i+".jpg"));
+      feed3.addPhoto(new Photo("IlfordFilm-"+i+".jpg"));
     }
     y=ycentre/2;
     x=xcentre;
     SfilmSpacing = height/1.32;
-    SfilmStripLength = SfilmSpacing*Sfilm.length;
+    SfilmStripLength = SfilmSpacing*numImages;
     SfilmSpeed = 0.6;
   }
   
