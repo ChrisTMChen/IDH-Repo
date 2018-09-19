@@ -131,17 +131,15 @@ void setup() {
 
   /* strip setup */
   { 
-<<<<<<< HEAD
-    for (int i = 0; i < Sfilm.length; i++) { 
-      (Irofilm[i] = loadImage("IroFilm-"+i+".jpg")).resize (1000, 667);
-      (Fujifilm[i] = loadImage("FujiFilm-"+i+".jpg")).resize (1000, 667);
-      (Ilfordfilm[i] = loadImage("IlfordFilm-"+i+".jpg")).resize (1000, 667);
-    }
-    y=ycentre/2;
-    x=xcentre;
-    SfilmSpacing = height/1.07;
-    SfilmStripLength = SfilmSpacing*Sfilm.length;
-=======
+    //for (int i = 0; i < Sfilm.length; i++) { 
+    //  (Irofilm[i] = loadImage("IroFilm-"+i+".jpg")).resize (1000, 667);
+    //  (Fujifilm[i] = loadImage("FujiFilm-"+i+".jpg")).resize (1000, 667);
+    //  (Ilfordfilm[i] = loadImage("IlfordFilm-"+i+".jpg")).resize (1000, 667);
+    //}
+    //y=ycentre/2;
+    //x=xcentre;
+    //SfilmSpacing = height/1.07;
+    //SfilmStripLength = SfilmSpacing*Sfilm.length;
     for (int i = 0; i < numImages; i++) { 
       feed1.addPhoto(new Photo("IroFilm-"+i+".jpg"));
       feed2.addPhoto(new Photo("FujiFilm-"+i+".jpg"));
@@ -149,9 +147,9 @@ void setup() {
     }
     y=ycentre/2;
     x=xcentre;
-    SfilmSpacing = height/1.32;
+    SfilmSpacing = height/1.07;
+    //height/1.32;
     SfilmStripLength = SfilmSpacing*numImages;
->>>>>>> e231c05843c3d38377db4f45845b7c74ca5247ad
     SfilmSpeed = 0.6;
   }
   for (int i = 0; i < UFStrip.length; i++) { 
