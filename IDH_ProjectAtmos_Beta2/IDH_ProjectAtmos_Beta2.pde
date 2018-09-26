@@ -18,7 +18,6 @@ HomeFeed home;
 Feed feed1;
 Feed feed2;
 Feed feed3;
-CameraFeed1 feed4;
 
 float curTime, prevTime;
 
@@ -75,10 +74,8 @@ int display;
 
 //------------------------------------------------------------setup
 void setup() {
-  //size(1920, 1080, P3D); //needs 16:9
   size(1920, 1080, P2D); //needs 16:9
   //size(1280, 720, P2D); //needs 16:9
-  //size(1280, 720, P3D); //needs 16:9
 
   textAlign(LEFT);
   heading = h/15;
@@ -102,7 +99,7 @@ void setup() {
   feed1 = new Feed("film feed","FilmNeverDie Iro 200","iro200logo.jpg");
   feed2 = new Feed("film feed","Fujifilm industrial 400", "fuji400logo.jpg");
   feed3 = new Feed("film feed","Fujifilm industrial 400","ilford400logo.jpg");
-  feed4 = new CameraFeed1();
+  //feed4 = new CameraFeed1();
 
   /* setup animation */
   myAnimation = new Gif(this, "test.gif");
@@ -131,15 +128,6 @@ void setup() {
 
   /* strip setup */
   { 
-    //for (int i = 0; i < Sfilm.length; i++) { 
-    //  (Irofilm[i] = loadImage("IroFilm-"+i+".jpg")).resize (1000, 667);
-    //  (Fujifilm[i] = loadImage("FujiFilm-"+i+".jpg")).resize (1000, 667);
-    //  (Ilfordfilm[i] = loadImage("IlfordFilm-"+i+".jpg")).resize (1000, 667);
-    //}
-    //y=ycentre/2;
-    //x=xcentre;
-    //SfilmSpacing = height/1.07;
-    //SfilmStripLength = SfilmSpacing*Sfilm.length;
     for (int i = 0; i < numImages; i++) { 
       feed1.addPhoto(new Photo("IroFilm-"+i+".jpg"));
       feed2.addPhoto(new Photo("FujiFilm-"+i+".jpg"));
@@ -148,7 +136,6 @@ void setup() {
     y=ycentre/2;
     x=xcentre;
     SfilmSpacing = height/1.07;
-    //height/1.32;
     SfilmStripLength = SfilmSpacing*numImages;
     SfilmSpeed = 0.6;
   }
@@ -229,10 +216,10 @@ void drawScreens() {
     feed3.draw();
     break;
 
-  case 4:
-    timers();
-    feed4.draw();
-    break;
+  //case 4:
+  //  timers();
+  //  feed4.draw();
+  //  break;
 
   default:
     timers();
@@ -268,7 +255,7 @@ void updateTimer() {
       markerDetected[i] = false;
     }
     state = 0;
-    //println("reset timer");
+    println("reset timer");
   }
 }
 

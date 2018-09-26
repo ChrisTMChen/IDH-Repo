@@ -45,7 +45,7 @@ class Feed
     x = x + SfilmSpeed;
     for (int i = 0; i < feed.size(); i++) {
       Photo photo = feed.get(i);
-      image(photo.image, - (x + i * SfilmSpacing) % SfilmStripLength + h+1000, y - y/10 );
+      image(photo.image, - (x + i * SfilmSpacing) % SfilmStripLength + h+1000, 140 );
     }    
   }
   
