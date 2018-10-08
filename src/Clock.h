@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxAruco.h"
+
 
 class Clock
 {
@@ -10,7 +12,7 @@ public:
 
 	void getTime();
 	void display(ofTrueTypeFont _font, int _x, int _y);
-	
+
 	int h;
 	int m;
 

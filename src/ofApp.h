@@ -3,53 +3,68 @@
 #include "ofMain.h"
 #include "Clock.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp {
 
-	public:
-		void setup();
-		void update();
+public:
+	void setup();
+	void update();
 
-		void drawClock();
+	void drawClock();
 
-		void draw();
-
-
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
+	void draw();
 
 
-		int w, h;
+	void keyPressed(int key);
+	void keyReleased(int key);
+	void mouseMoved(int x, int y);
+	void mouseDragged(int x, int y, int button);
+	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
+	void mouseEntered(int x, int y);
+	void mouseExited(int x, int y);
+	void windowResized(int w, int h);
+	void dragEvent(ofDragInfo dragInfo);
+	void gotMessage(ofMessage msg);
 
-		int heading;
-		int body;
-		int body1;
-		int body2;
 
-		int left;
-		int left1;
-		int xcentre;
-		int ycentre;
-		int right;
-		int right1;
-		int top;
-		int top1;
-		int bottom;
-		int bottom1;
+	int w, h;
 
-		ofImage logo;
-		int fontsize;
+	int heading;
+	int body;
+	int body1;
+	int body2;
 
-		ofTrueTypeFont font;
-		ofTrueTypeFont font1;
+	int left;
+	int left1;
+	int xcentre;
+	int ycentre;
+	int right;
+	int right1;
+	int top;
+	int top1;
+	int bottom;
+	int bottom1;
 
-		Clock clock;
+	ofImage logo;
+	int fontsize;
+
+	ofTrueTypeFont font;
+	ofTrueTypeFont font1;
+
+	Clock clock;
+
+
+	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
+	ofVideoGrabber grabber;
+	ofVideoPlayer player;
+
+	ofBaseVideoDraws * video;
+
+	ofxAruco aruco;
+	bool useVideo;
+	bool showMarkers;
+	bool showBoard;
+	bool showBoardImage;
+	ofImage board;
+	ofImage marker;
 };
