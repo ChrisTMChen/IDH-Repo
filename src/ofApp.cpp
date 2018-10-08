@@ -46,6 +46,7 @@ void ofApp::setup() {
 	font1.load("fonts/Roboto/Roboto-Bold.ttf", body, true, true, true);
 
 	clock.getTime();
+	gallery.setup();
 
 
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,7 +86,7 @@ void ofApp::update() {
 	video->update();
 	if (video->isFrameNew()) {
 		aruco.detectBoards(video->getPixels());
-		cout << "detect" << endl;
+		//cout << "detect" << endl;
 	}
 }
 
@@ -94,10 +95,13 @@ void ofApp::draw() {
 
 	ofBackground(47, 54, 64);
 	logo.draw(0, 980);
-	//drawClock();
+	//drawClock(); //->slow atm probs TTF
 
-	video->draw(w / 4, h / 4, w / 2, h / 2);
+	video->draw(w / 4, h / 4, w / 2, h / 2); // view camera feed
 
+	//gallery.load();
+	//gallery.draw(100, 100, 640, 480);
+	
 	//aruco.draw();
 
 	if (showMarkers) {

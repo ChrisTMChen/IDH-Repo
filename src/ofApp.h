@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "Clock.h"
+#include "Gallery.h"
+#include "ofxAruco.h"
 
 class ofApp : public ofBaseApp {
 
@@ -52,7 +54,7 @@ public:
 	ofTrueTypeFont font1;
 
 	Clock clock;
-
+	Gallery gallery;
 
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
 	ofVideoGrabber grabber;
