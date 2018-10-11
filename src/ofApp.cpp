@@ -46,7 +46,7 @@ void ofApp::setup() {
 	font1.load("fonts/Roboto/Roboto-Bold.ttf", body, true, true, true);
 
 	clock.getTime();
-	gallery.setup();
+	gallery.setup(0);
 	
 	
 	gallery.load();
@@ -99,11 +99,15 @@ void ofApp::draw() {
 	logo.draw(0, 980);
 	//drawClock(); //->slow atm probs TTF
 
-	video->draw(w / 4, h / 4, w / 2, h / 2); // view camera feed
 
 	//gallery.load();
-	gallery.draw(100, 100, 40, 40);
-	
+	gallery.drawSpeed(3);
+	gallery.drawStrip(0, h/2-240, 480);
+
+
+	video->draw(0, 0, w / 4, h / 4); // view camera feed
+
+
 	//aruco.draw();
 
 	if (showMarkers) {
@@ -128,18 +132,21 @@ void ofApp::draw() {
 	if (showBoardImage) {
 		board.draw(ofGetWidth() - 320, 0, 320, 320 * float(board.getHeight()) / float(board.getWidth()));
 	}
+	
+	/*
 	ofDrawBitmapString("markers detected: " + ofToString(aruco.getNumMarkers()), 20, 20);
 	ofDrawBitmapString("fps " + ofToString(ofGetFrameRate()), 20, 40);
 	ofDrawBitmapString("m toggles markers", 20, 60);
 	ofDrawBitmapString("b toggles board", 20, 80);
 	ofDrawBitmapString("i toggles board image", 20, 100);
 	ofDrawBitmapString("s saves board image", 20, 120);
-	ofDrawBitmapString("0-9 saves marker image", 20, 140);
+	ofDrawBitmapString("0-9 saves marker image", 20, 140);*/
+
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-	if (key == 'm') showMarkers = !showMarkers;
+	/*if (key == 'm') showMarkers = !showMarkers;
 	if (key == 'b') showBoard = !showBoard;
 	if (key == 'i') showBoardImage = !showBoardImage;
 	if (key == 's') board.save("boardimage.png");
@@ -148,7 +155,7 @@ void ofApp::keyPressed(int key) {
 		int markerID = key - '0';
 		aruco.getMarkerImage(markerID, 240, marker);
 		marker.save("marker" + ofToString(markerID) + ".png");
-	}
+	}*/
 }
 
 //--------------------------------------------------------------
