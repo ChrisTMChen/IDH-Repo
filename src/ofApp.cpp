@@ -47,7 +47,9 @@ void ofApp::setup() {
 
 	clock.getTime();
 	gallery.setup();
-
+	
+	
+	gallery.load();
 
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
 	useVideo = false;
@@ -100,7 +102,7 @@ void ofApp::draw() {
 	video->draw(w / 4, h / 4, w / 2, h / 2); // view camera feed
 
 	//gallery.load();
-	//gallery.draw(100, 100, 640, 480);
+	gallery.draw(100, 100, 40, 40);
 	
 	//aruco.draw();
 
