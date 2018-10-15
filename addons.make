@@ -1,0 +1,4 @@
+ofxAruco
+ofxCv
+ofxOpenCv
+ofxPoco

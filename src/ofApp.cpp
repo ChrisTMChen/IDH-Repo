@@ -39,13 +39,15 @@ void ofApp::setup() {
 	bottom1 = h - h / 16;
 	xcentre = w / 2;
 	ycentre = h / 2;
+	
+	bDebug = false;
 
 	logo.load("FNDlogo.jpg");
 
 	font.load("fonts/Roboto/Roboto-Regular.ttf", body, true, true, true);
 	font1.load("fonts/Roboto/Roboto-Bold.ttf", body, true, true, true);
 
-	clock.getTime();
+	clock.setup(body);
 	gallery.setup();
 	
 	
@@ -61,12 +63,12 @@ void ofApp::setup() {
 		video = &player;
 	}
 	else {
-		grabber.setDeviceID(0);
+		//grabber.setDeviceID(1);
 		grabber.initGrabber(640, 480);
 		video = &grabber;
 	}
 
-	//aruco.setThreaded(false);
+	//aruco.setThreaded(true);
 	aruco.setup("aruco/intrinsics.int", video->getWidth(), video->getHeight(), boardName);
 	aruco.getBoardImage(board.getPixels());
 	board.update();
@@ -82,13 +84,12 @@ void ofApp::setup() {
 
 //--------------------------------------------------------------
 void ofApp::update() {
-	ofSetWindowTitle("OF_IDH ~ FPS:" + ofToString(ofGetFrameRate()));
+	//ofSetWindowTitle("OF_IDH ~ FPS:" + ofToString(ofGetFrameRate()));
 
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
 	video->update();
 	if (video->isFrameNew()) {
 		aruco.detectBoards(video->getPixels());
-		//cout << "detect" << endl;
 	}
 }
 
@@ -97,14 +98,13 @@ void ofApp::draw() {
 
 	ofBackground(47, 54, 64);
 	logo.draw(0, 980);
-	//drawClock(); //->slow atm probs TTF
+//	clock.display(right, top); //->slow atm probs TTF
 
-	video->draw(w / 4, h / 4, w / 2, h / 2); // view camera feed
+	if(bDebug) {
+		video->draw(w / 4, h / 4, video->getWidth(), video->getHeight()); // view camera feed
+	}
 
-	//gallery.load();
 	gallery.draw(100, 100, 40, 40);
-	
-	//aruco.draw();
 
 	if (showMarkers) {
 		for (int i = 0; i < aruco.getNumMarkers(); i++) {
@@ -134,29 +134,25 @@ void ofApp::draw() {
 	ofDrawBitmapString("b toggles board", 20, 80);
 	ofDrawBitmapString("i toggles board image", 20, 100);
 	ofDrawBitmapString("s saves board image", 20, 120);
-	ofDrawBitmapString("0-9 saves marker image", 20, 140);
+	ofDrawBitmapString("0-9 saves marker image", 20, 140);\
+	
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
 	if (key == 'm') showMarkers = !showMarkers;
-	if (key == 'b') showBoard = !showBoard;
-	if (key == 'i') showBoardImage = !showBoardImage;
-	if (key == 's') board.save("boardimage.png");
-	if (key >= '0' && key <= '9') {
+	else if (key == 'b') showBoard = !showBoard;
+	else if (key == 'i') showBoardImage = !showBoardImage;
+	else if (key == 's') board.save("boardimage.png");
+	else if (key >= '0' && key <= '9') {
 		// there's 1024 different markers
 		int markerID = key - '0';
 		aruco.getMarkerImage(markerID, 240, marker);
 		marker.save("marker" + ofToString(markerID) + ".png");
 	}
-}
-
-//--------------------------------------------------------------
-void ofApp::drawClock() {
-
-	clock.getTime();
-	clock.display(font, right, top);
-
+	else if (key == ' ') bDebug = !bDebug;
+	
+	
 }
 
 //--------------------------------------------------------------

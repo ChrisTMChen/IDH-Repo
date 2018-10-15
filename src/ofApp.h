@@ -10,11 +10,7 @@ class ofApp : public ofBaseApp {
 public:
 	void setup();
 	void update();
-
-	void drawClock();
-
 	void draw();
-
 
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -69,4 +65,6 @@ public:
 	bool showBoardImage;
 	ofImage board;
 	ofImage marker;
+	
+	bool bDebug;
 };

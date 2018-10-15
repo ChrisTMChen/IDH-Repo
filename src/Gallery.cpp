@@ -17,7 +17,7 @@ void Gallery::setup() {
 	
 	loaded = false;
 
-	//if setup() load all galleries
+	//load all galleries
 
 		for (int i = 0; i <= 2; i++) {
 			string name;
@@ -29,7 +29,7 @@ void Gallery::setup() {
 
 void Gallery::setup(int gallery_selector) {
 
-	//if setup(int) load specific gallery
+	//load specific gallery
 
 	loaded = false;
 
@@ -72,9 +72,8 @@ void Gallery::load() {
 }
 
 void Gallery::draw(int x, int y, int image_width, int image_height) {
-	cout << ofToString(image_vec.size()) << endl;
+	ofSetColor(255);
 	for (int i = 0; i < image_vec.size(); i++) {
-		ofSetColor(255);
 		image_vec[i].draw(x + (i * image_width), y, image_width, image_height);
 	}
 }
