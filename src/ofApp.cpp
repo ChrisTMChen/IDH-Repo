@@ -46,7 +46,7 @@ void ofApp::setup() {
 	font1.load("fonts/Roboto/Roboto-Bold.ttf", body, true, true, true);
 
 	clock.getTime();
-	gallery.setup(0);
+	gallery.setup();
 	
 	state = 0;
 	numMarkers = 3;
