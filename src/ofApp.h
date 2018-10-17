@@ -10,9 +10,7 @@ class ofApp : public ofBaseApp {
 public:
 	void setup();
 	void update();
-<<<<<<< HEAD
 	void draw();
-=======
 	void startTimer();
 	void updateTimer();
 	void drawClock();
@@ -20,12 +18,11 @@ public:
 	void gallery_load(int select_gallery);
 	void gallery_home_load();
 
-	void draw();
+	//void draw();
 	void update_state();
 	void detect_marker();
 	void timers();
 	void load_loop(int looper);
->>>>>>> openframeworks_windows
 
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -83,13 +80,8 @@ public:
 	//bool showBoardImage;
 	ofImage board;
 	ofImage marker;
-<<<<<<< HEAD
 	
 	bool bDebug;
-};
-=======
-	//-------------------------------------------------
-
 	int state;
 	int numMarkers;
 
@@ -97,5 +89,7 @@ public:
 	vector<bool> loaded;
 
 	vector<bool> markerDetected;
+
 };
->>>>>>> openframeworks_windows
+
+	//------------------------------------------------

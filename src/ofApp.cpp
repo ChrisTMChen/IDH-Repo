@@ -114,7 +114,6 @@ void ofApp::startTimer() {
 	
 	prevTime = curTime = ofGetElapsedTimeMillis();
 
-<<<<<<< HEAD
 	ofBackground(47, 54, 64);
 	logo.draw(0, 980);
 //	clock.display(right, top); //->slow atm probs TTF
@@ -124,11 +123,8 @@ void ofApp::startTimer() {
 	}
 
 	gallery.draw(100, 100, 40, 40);
-=======
 }
 
-
->>>>>>> openframeworks_windows
 
 //-----------------------------------
 void ofApp::updateTimer() {
@@ -204,33 +200,31 @@ void ofApp::load_loop(int looper) {
 			loaded[j] = false;
 		}
 	}
-<<<<<<< HEAD
-	ofDrawBitmapString("markers detected: " + ofToString(aruco.getNumMarkers()), 20, 20);
-	ofDrawBitmapString("fps " + ofToString(ofGetFrameRate()), 20, 40);
-	ofDrawBitmapString("m toggles markers", 20, 60);
-	ofDrawBitmapString("b toggles board", 20, 80);
-	ofDrawBitmapString("i toggles board image", 20, 100);
-	ofDrawBitmapString("s saves board image", 20, 120);
-	ofDrawBitmapString("0-9 saves marker image", 20, 140);\
+//<<<<<<< HEAD
+//	ofDrawBitmapString("markers detected: " + ofToString(aruco.getNumMarkers()), 20, 20);
+//	ofDrawBitmapString("fps " + ofToString(ofGetFrameRate()), 20, 40);
+//	ofDrawBitmapString("m toggles markers", 20, 60);
+//	ofDrawBitmapString("b toggles board", 20, 80);
+//	ofDrawBitmapString("i toggles board image", 20, 100);
+//	ofDrawBitmapString("s saves board image", 20, 120);
+//	ofDrawBitmapString("0-9 saves marker image", 20, 140);\
 	
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-	if (key == 'm') showMarkers = !showMarkers;
-	else if (key == 'b') showBoard = !showBoard;
-	else if (key == 'i') showBoardImage = !showBoardImage;
-	else if (key == 's') board.save("boardimage.png");
-	else if (key >= '0' && key <= '9') {
-		// there's 1024 different markers
-		int markerID = key - '0';
-		aruco.getMarkerImage(markerID, 240, marker);
-		marker.save("marker" + ofToString(markerID) + ".png");
-	}
-	else if (key == ' ') bDebug = !bDebug;
+	//if (key == 'm') showMarkers = !showMarkers;
+	//else if (key == 'b') showBoard = !showBoard;
+	//else if (key == 'i') showBoardImage = !showBoardImage;
+	//else if (key == 's') board.save("boardimage.png");
+	//else if (key >= '0' && key <= '9') {
+	//	// there's 1024 different markers
+	//	int markerID = key - '0';
+	//	aruco.getMarkerImage(markerID, 240, marker);
+	//	marker.save("marker" + ofToString(markerID) + ".png");
+	//}
+	if (key == ' ') bDebug = !bDebug;
 	
-	
-=======
 	//cout << "toggle after: " + ofToString(toggle) << endl;
 	//cout << ofToString(loaded) << endl;
 }
@@ -306,14 +300,12 @@ void ofApp::timers() {
 void ofApp::drawClock() {
 
 	clock.getTime();
-	clock.display(font, right, top);
-
->>>>>>> openframeworks_windows
+	clock.display(right, top);
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key) {
-}
+//void ofApp::keyPressed(int key) {
+//}
 
 
 //--------------------------------------------------------------
