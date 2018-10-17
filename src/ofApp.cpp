@@ -122,13 +122,13 @@ void ofApp::updateTimer() {
 	curTime = ofGetElapsedTimeMillis();
 	if ((curTime - prevTime) > timeOut)
 	{
-		cout << "marker timed out!" << endl;
+		//cout << "marker timed out!" << endl;
 		for (int i = 0; i < markerDetected.size(); i++) {
 			markerDetected[i] = false;
 		}
 
 		state = 1;
-		cout << "reset timer" << endl;
+		//cout << "reset timer" << endl;
 
 	}
 
@@ -142,11 +142,9 @@ void ofApp::update_state() {
 		state = 0;
 	for (int i = 0; i < markerDetected.size(); i++) {
 
-		//if (aruco.getNumMarkers() <= numMarkers) {
-			if (markerDetected[i]) {
+		if (markerDetected[i]) {
 				state = 1 + i;
 			}
-		//}
 	}
 }
 //----------------------------------------------------------------
@@ -160,9 +158,9 @@ void ofApp::detect_marker() {
 		if (i == aruco.getNumMarkers()) {
 			markerDetected[i] = true;
 			if (i > 0) {
-				cout << "found markers: " + ofToString(i) << endl;
+				//cout << "found markers: " + ofToString(i) << endl;
 				startTimer();
-				cout << "starttimer" << endl;
+				//cout << "starttimer" << endl;
 			}
 		}
 		else
@@ -175,23 +173,25 @@ void ofApp::detect_marker() {
 void ofApp::load_loop(int looper) {
 
 	toggle = looper;
+
 	if (loaded[looper] == false) {
 		gallery.exit();
+		//if (looper == 0) { gallery_home_load(); }
 		gallery_load(looper - 1);
 		cout << "gallery loaded" + ofToString(looper - 1) << endl;
 		loaded[looper] = true;
 	}
 
-	cout << "toggle before: " + ofToString(toggle) << endl;
-	cout << ofToString(loaded) << endl;
+	//cout << "toggle before: " + ofToString(toggle) << endl;
+	//cout << ofToString(loaded) << endl;
 
 	for (int j = 0; j <= numMarkers; j++) {
 		if (j != looper) {
 			loaded[j] = false;
 		}
 	}
-	cout << "toggle after: " + ofToString(toggle) << endl;
-	cout << ofToString(loaded) << endl;
+	//cout << "toggle after: " + ofToString(toggle) << endl;
+	//cout << ofToString(loaded) << endl;
 }
 
 //---------------------------------------------------------------------
@@ -200,7 +200,7 @@ void ofApp::draw_strip() {
 	for (auto& m : aruco.getMarkers()) {
 		
 		string marker = ofToString(m).substr(0, 3);
-		cout << "marker: " + marker << endl;
+		//cout << "marker: " + marker << endl;
 
 		for (int i = 0; i <= numMarkers; i++) {
 			if (i == 1 && marker == "964") {
@@ -212,15 +212,12 @@ void ofApp::draw_strip() {
 			if (i == 3 && marker == "268") {
 				load_loop(i);
 			}
+			//if (i == 0){
+			//	load_loop(i);
+			//}
 		}
 	}
 
-}
-
-//-------------------------------------------------------------------
-
-
-void ofApp::populate_gallery() {
 }
 
 //--------------------------------------------------------------

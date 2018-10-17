@@ -14,7 +14,6 @@ public:
 	void updateTimer();
 	void drawClock();
 	void draw_strip();
-	void populate_gallery();
 	void gallery_load(int select_gallery);
 	void gallery_home_load();
 
@@ -22,7 +21,7 @@ public:
 	void update_state();
 	void detect_marker();
 	void timers();
-	void ofApp::load_loop(int looper);
+	void load_loop(int looper);
 
 	void keyPressed(int key);
 	void keyReleased(int key);

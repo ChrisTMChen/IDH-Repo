@@ -17,7 +17,7 @@ public:
 	void drawStrip(int x, int y, int image_height, int total_width);
 	void drawSpeed(int _speed);
 	void exit();
-
+	void reset_funct();
 	int h;
 	int m;
 //	int x_pos;
@@ -34,7 +34,7 @@ public:
 	ofFbo Slide_Fbo;
 	
 	bool loaded;
-
+	int reset;
 	int draw_min, draw_max, draw_position, total_width;
 	float speed;
 };
