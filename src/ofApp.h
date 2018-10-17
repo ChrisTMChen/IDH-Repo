@@ -14,7 +14,8 @@ public:
 	void drawClock();
 
 	void draw();
-
+	void update_state();
+	void detect_marker();
 
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -65,8 +66,14 @@ public:
 	ofxAruco aruco;
 	bool useVideo;
 	bool showMarkers;
-	bool showBoard;
-	bool showBoardImage;
+	//bool showBoard;
+	//bool showBoardImage;
 	ofImage board;
 	ofImage marker;
+	//-------------------------------------------------
+
+	int state;
+	int numMarkers;
+
+	vector<bool> markerDetected;
 };

@@ -14,14 +14,16 @@ public:
 
 	void load();
 	void draw(int x, int y, int image_width, int image_height);
-	void drawStrip(int x, int y, int image_height);
+	void drawStrip(int x, int y, int image_height, int total_width);
 	void drawSpeed(int _speed);
 	void exit();
 
 	int h;
 	int m;
+//	int x_pos;
+//	int image_scale;
 	//int newimage_scale;
-	int image_scale;
+//	int image_scale;
 
 	string path;
 

@@ -14,7 +14,6 @@ Gallery::~Gallery()
 
 
 void Gallery::setup() {	
-	
 	loaded = false;
 
 	//if setup() load all galleries
@@ -60,7 +59,7 @@ void Gallery::load() {
 		for (int i = 0; i < gallery_name.size(); i++) {
 			ofDirectory dir(gallery_name[i]);
 			//only show jpg files
-			dir.allowExt("jpg");
+			//dir.allowExt("jpg");
 			//populate the directory object
 			dir.listDir();
 			for (int j = 0; j < dir.size(); j++) {
@@ -92,39 +91,26 @@ void Gallery::draw(int x, int y, int image_width, int image_height) {
 	}
 }
 
-void Gallery::drawStrip(int x, int y, int image_height) {
+void Gallery::drawStrip(int x, int y, int image_height, int total_width) {
 
-	cout << "min:" + ofToString(draw_min) + "    max:" + ofToString(draw_max) << endl;
-	cout << "vec:" + ofToString(image_vec.size()) << endl;
+	for (int i = 0; i < image_vec.size(); i++) {
 
-	int i = draw_min;
-	while (i < image_vec.size()) {
-
-		float image_scale = image_height / image_vec[draw_min].getHeight();
-		int x_pos = (x + i * (image_vec[i].getWidth()*image_scale)) - speed;
+		float	image_scale = image_height / image_vec[i].getHeight();
+		int x_pos;
+		//if (i > 0) {
+		//	float last_scale = image_height / image_vec[i - 1].getHeight();
+		//	x_pos = x + (i-1)*image_vec[i - 1].getWidth()*last_scale;
+		//}
+		//else { x_pos = 0; }
+		
+		x_pos = x + i * image_vec[i].getWidth()*image_scale;
 		int image_width = image_vec[i].getWidth()*image_scale;
-
-		if (draw_max != image_vec.size()) {
-			image_vec[i].draw(x_pos, y, image_width, image_height);
-			i++;
-			if (x_pos + image_width < 0) {
-				draw_min = draw_min + 1;
-			}
-
-			if (i == draw_max - 1) {
-				if (x_pos < ofGetWidth()) {
-					draw_max = draw_max + 1;
-				}
-			}
-		}
-
-		else {
-			draw_min = 0;
-			draw_max = 3;
-			break;
+		if (x_pos - speed <= total_width && x_pos - speed + image_width - speed > 0) {
+			image_vec[i].draw(x_pos - speed, y, image_width, image_height);
 		}
 	}
 }
+
 
 void Gallery::exit() {
 
