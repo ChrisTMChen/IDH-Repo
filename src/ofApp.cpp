@@ -3,20 +3,20 @@
 #include "ofxOpenCv.h"
 #include "ofBitmapFont.h"
 
-void drawMarker(float size, const ofColor & color) {
-	ofDrawAxis(size);
-	ofPushMatrix();
-	// move up from the center by size*.5
-	// to draw a box centered at that point
-	ofTranslate(0, size*0.5, 0);
-	ofFill();
-	ofSetColor(color, 50);
-	ofDrawBox(size);
-	ofNoFill();
-	ofSetColor(color);
-	ofDrawBox(size);
-	ofPopMatrix();
-}
+//void drawMarker(float size, const ofColor & color) {
+//	ofDrawAxis(size);
+//	ofPushMatrix();
+//	// move up from the center by size*.5
+//	// to draw a box centered at that point
+//	ofTranslate(0, size*0.5, 0);
+//	ofFill();
+//	ofSetColor(color, 50);
+//	ofDrawBox(size);
+//	ofNoFill();
+//	ofSetColor(color);
+//	ofDrawBox(size);
+//	ofPopMatrix();
+//}
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -50,6 +50,22 @@ void ofApp::setup() {
 	clock.setup(body);
 	gallery.setup();
 	
+	state = 0;
+	numMarkers = 3;
+	timeOut = 3000;
+	frame = 0;
+	reset = 0;
+
+	toggle = 0;
+
+	for (int i = 0; i <= numMarkers; i++) {
+		
+		bool init = false;
+		markerDetected.push_back(init);
+		loaded.push_back(init);
+
+	}
+
 	
 	gallery.load();
 
@@ -74,8 +90,8 @@ void ofApp::setup() {
 	board.update();
 
 	showMarkers = true;
-	showBoard = true;
-	showBoardImage = false;
+	//showBoard = true;
+	//showBoardImage = false;
 
 	ofEnableAlphaBlending();
 
@@ -93,9 +109,12 @@ void ofApp::update() {
 	}
 }
 
-//--------------------------------------------------------------
-void ofApp::draw() {
+//-------------------------------
+void ofApp::startTimer() {
+	
+	prevTime = curTime = ofGetElapsedTimeMillis();
 
+<<<<<<< HEAD
 	ofBackground(47, 54, 64);
 	logo.draw(0, 980);
 //	clock.display(right, top); //->slow atm probs TTF
@@ -105,29 +124,87 @@ void ofApp::draw() {
 	}
 
 	gallery.draw(100, 100, 40, 40);
+=======
+}
 
-	if (showMarkers) {
-		for (int i = 0; i < aruco.getNumMarkers(); i++) {
-			aruco.begin(i);
-			drawMarker(0.15, ofColor::white);
-			aruco.end();
+
+>>>>>>> openframeworks_windows
+
+//-----------------------------------
+void ofApp::updateTimer() {
+
+	curTime = ofGetElapsedTimeMillis();
+	if ((curTime - prevTime) > timeOut)
+	{
+		//cout << "marker timed out!" << endl;
+		for (int i = 0; i < markerDetected.size(); i++) {
+			markerDetected[i] = false;
+		}
+
+		state = 1;
+		//cout << "reset timer" << endl;
+
+	}
+
+}
+
+
+//------------------------------------------------------------------
+void ofApp::update_state() {
+
+	if (state != 0) return;
+		state = 0;
+	for (int i = 0; i < markerDetected.size(); i++) {
+
+		if (markerDetected[i]) {
+				state = 1 + i;
+			}
+	}
+}
+//----------------------------------------------------------------
+void ofApp::detect_marker() {
+
+	updateTimer();
+
+	for (int i = 0; i <= numMarkers; i++) {
+
+
+		if (i == aruco.getNumMarkers()) {
+			markerDetected[i] = true;
+			if (i > 0) {
+				//cout << "found markers: " + ofToString(i) << endl;
+				startTimer();
+				//cout << "starttimer" << endl;
+			}
+		}
+		else
+		{
+			markerDetected[i] = false;
 		}
 	}
+}
+//---------------------------------------------------------------------
+void ofApp::load_loop(int looper) {
 
+	toggle = looper;
 
-	if (showBoard && aruco.getBoardProbability() > 0.03) {
-		for (int i = 0; i < aruco.getNumBoards(); i++) {
-			aruco.beginBoard(i);
-			drawMarker(.5, ofColor::red);
-			aruco.end();
+	if (loaded[looper] == false) {
+		gallery.exit();
+		//if (looper == 0) { gallery_home_load(); }
+		gallery_load(looper - 1);
+		cout << "gallery loaded" + ofToString(looper - 1) << endl;
+		loaded[looper] = true;
+	}
+
+	//cout << "toggle before: " + ofToString(toggle) << endl;
+	//cout << ofToString(loaded) << endl;
+
+	for (int j = 0; j <= numMarkers; j++) {
+		if (j != looper) {
+			loaded[j] = false;
 		}
 	}
-
-
-	ofSetColor(255);
-	if (showBoardImage) {
-		board.draw(ofGetWidth() - 320, 0, 320, 320 * float(board.getHeight()) / float(board.getWidth()));
-	}
+<<<<<<< HEAD
 	ofDrawBitmapString("markers detected: " + ofToString(aruco.getNumMarkers()), 20, 20);
 	ofDrawBitmapString("fps " + ofToString(ofGetFrameRate()), 20, 40);
 	ofDrawBitmapString("m toggles markers", 20, 60);
@@ -153,7 +230,91 @@ void ofApp::keyPressed(int key) {
 	else if (key == ' ') bDebug = !bDebug;
 	
 	
+=======
+	//cout << "toggle after: " + ofToString(toggle) << endl;
+	//cout << ofToString(loaded) << endl;
 }
+
+//---------------------------------------------------------------------
+void ofApp::draw_strip() {
+	
+	for (auto& m : aruco.getMarkers()) {
+		
+		string marker = ofToString(m).substr(0, 3);
+		//cout << "marker: " + marker << endl;
+
+		for (int i = 0; i <= numMarkers; i++) {
+			if (i == 1 && marker == "964") {
+				load_loop(i);
+			}
+			if (i == 2 && marker == "691") {
+				load_loop(i);
+			}
+			if (i == 3 && marker == "268") {
+				load_loop(i);
+			}
+			//if (i == 0){
+			//	load_loop(i);
+			//}
+		}
+	}
+
+}
+
+//--------------------------------------------------------------
+void ofApp::gallery_load(int select_gallery){
+	gallery.setup(select_gallery);
+	gallery.load();
+}
+
+//--------------------------------------------------------------
+void ofApp::gallery_home_load() {
+	gallery.setup();
+	gallery.load();
+}
+
+//--------------------------------------------------------------
+void ofApp::draw() {
+	ofBackground(47, 54, 64);
+	logo.draw(0, 980);
+	
+	//drawClock(); //->slow atm probs TTF
+	
+	detect_marker();
+	draw_strip();
+	gallery.drawSpeed(1);
+	gallery.drawStrip(0, h / 2 - 240, 480, w);
+	video->draw(0, 0, w / 4, h / 4); // view camera feed
+}
+
+void ofApp::timers() {
+	
+	frame = frame + 0.005; // change for home toggle duration
+
+	if (frame >= 2) {
+		//display = 1;
+		if (frame >= 6) {
+			//display = 0;
+			reset = frame;
+			frame = frame - reset;
+		}
+	}
+
+}
+
+//--------------------------------------------------------------
+void ofApp::drawClock() {
+
+	clock.getTime();
+	clock.display(font, right, top);
+
+>>>>>>> openframeworks_windows
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key) {
+}
+
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {

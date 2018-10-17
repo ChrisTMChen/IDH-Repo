@@ -10,7 +10,22 @@ class ofApp : public ofBaseApp {
 public:
 	void setup();
 	void update();
+<<<<<<< HEAD
 	void draw();
+=======
+	void startTimer();
+	void updateTimer();
+	void drawClock();
+	void draw_strip();
+	void gallery_load(int select_gallery);
+	void gallery_home_load();
+
+	void draw();
+	void update_state();
+	void detect_marker();
+	void timers();
+	void load_loop(int looper);
+>>>>>>> openframeworks_windows
 
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -24,8 +39,11 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
+	int timeOut;
 
 	int w, h;
+
+	float curTime, prevTime, frame, reset;
 
 	int heading;
 	int body;
@@ -61,10 +79,23 @@ public:
 	ofxAruco aruco;
 	bool useVideo;
 	bool showMarkers;
-	bool showBoard;
-	bool showBoardImage;
+	//bool showBoard;
+	//bool showBoardImage;
 	ofImage board;
 	ofImage marker;
+<<<<<<< HEAD
 	
 	bool bDebug;
 };
+=======
+	//-------------------------------------------------
+
+	int state;
+	int numMarkers;
+
+	int toggle;
+	vector<bool> loaded;
+
+	vector<bool> markerDetected;
+};
+>>>>>>> openframeworks_windows
