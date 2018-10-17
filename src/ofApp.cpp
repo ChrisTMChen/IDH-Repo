@@ -3,20 +3,20 @@
 #include "ofxOpenCv.h"
 #include "ofBitmapFont.h"
 
-void drawMarker(float size, const ofColor & color) {
-	ofDrawAxis(size);
-	ofPushMatrix();
-	// move up from the center by size*.5
-	// to draw a box centered at that point
-	ofTranslate(0, size*0.5, 0);
-	ofFill();
-	ofSetColor(color, 50);
-	ofDrawBox(size);
-	ofNoFill();
-	ofSetColor(color);
-	ofDrawBox(size);
-	ofPopMatrix();
-}
+//void drawMarker(float size, const ofColor & color) {
+//	ofDrawAxis(size);
+//	ofPushMatrix();
+//	// move up from the center by size*.5
+//	// to draw a box centered at that point
+//	ofTranslate(0, size*0.5, 0);
+//	ofFill();
+//	ofSetColor(color, 50);
+//	ofDrawBox(size);
+//	ofNoFill();
+//	ofSetColor(color);
+//	ofDrawBox(size);
+//	ofPopMatrix();
+//}
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -50,11 +50,18 @@ void ofApp::setup() {
 	
 	state = 0;
 	numMarkers = 3;
+	timeOut = 3000;
+	frame = 0;
+	reset = 0;
+
+	toggle = 0;
 
 	for (int i = 0; i <= numMarkers; i++) {
 		
 		bool init = false;
 		markerDetected.push_back(init);
+		loaded.push_back(init);
+
 	}
 
 	
@@ -97,77 +104,164 @@ void ofApp::update() {
 	video->update();
 	if (video->isFrameNew()) {
 		aruco.detectBoards(video->getPixels());
-		//cout << "detect" << endl;
 	}
 }
 
+//-------------------------------
+void ofApp::startTimer() {
+	
+	prevTime = curTime = ofGetElapsedTimeMillis();
+
+}
+
+
+
+//-----------------------------------
+void ofApp::updateTimer() {
+
+	curTime = ofGetElapsedTimeMillis();
+	if ((curTime - prevTime) > timeOut)
+	{
+		cout << "marker timed out!" << endl;
+		for (int i = 0; i < markerDetected.size(); i++) {
+			markerDetected[i] = false;
+		}
+
+		state = 1;
+		cout << "reset timer" << endl;
+
+	}
+
+}
+
+
+//------------------------------------------------------------------
 void ofApp::update_state() {
 
-	if (state != 0) {
-		return;
+	if (state != 0) return;
 		state = 0;
-	}
-	for (int i = 0; i < aruco.getNumMarkers(); i++) {
+	for (int i = 0; i < markerDetected.size(); i++) {
 
-		if (aruco.getNumMarkers() <= numMarkers) {
-			if (markerDetected[i] == true) {
+		//if (aruco.getNumMarkers() <= numMarkers) {
+			if (markerDetected[i]) {
 				state = 1 + i;
 			}
-		}
+		//}
 	}
 }
-
+//----------------------------------------------------------------
 void ofApp::detect_marker() {
+
+	updateTimer();
 
 	for (int i = 0; i <= numMarkers; i++) {
 
 
 		if (i == aruco.getNumMarkers()) {
 			markerDetected[i] = true;
-			cout << "found markers: " + ofToString(i) << endl;
+			if (i > 0) {
+				cout << "found markers: " + ofToString(i) << endl;
+				startTimer();
+				cout << "starttimer" << endl;
+			}
 		}
 		else
 		{
 			markerDetected[i] = false;
 		}
 	}
+}
+//---------------------------------------------------------------------
+void ofApp::load_loop(int looper) {
 
+	toggle = looper;
+	if (loaded[looper] == false) {
+		gallery.exit();
+		gallery_load(looper - 1);
+		cout << "gallery loaded" + ofToString(looper - 1) << endl;
+		loaded[looper] = true;
+	}
+
+	cout << "toggle before: " + ofToString(toggle) << endl;
+	cout << ofToString(loaded) << endl;
+
+	for (int j = 0; j <= numMarkers; j++) {
+		if (j != looper) {
+			loaded[j] = false;
+		}
+	}
+	cout << "toggle after: " + ofToString(toggle) << endl;
+	cout << ofToString(loaded) << endl;
+}
+
+//---------------------------------------------------------------------
+void ofApp::draw_strip() {
+	
 	for (auto& m : aruco.getMarkers()) {
+		
 		string marker = ofToString(m).substr(0, 3);
 		cout << "marker: " + marker << endl;
 
-		if (marker == "154") {
-			gallery.drawSpeed(1);
-			gallery.drawStrip(0, h / 2 - 240, 480, w);
+		for (int i = 0; i <= numMarkers; i++) {
+			if (i == 1 && marker == "964") {
+				load_loop(i);
+			}
+			if (i == 2 && marker == "691") {
+				load_loop(i);
+			}
+			if (i == 3 && marker == "268") {
+				load_loop(i);
+			}
 		}
 	}
+
+}
+
+//-------------------------------------------------------------------
+
+
+void ofApp::populate_gallery() {
+}
+
+//--------------------------------------------------------------
+void ofApp::gallery_load(int select_gallery){
+	gallery.setup(select_gallery);
+	gallery.load();
+}
+
+//--------------------------------------------------------------
+void ofApp::gallery_home_load() {
+	gallery.setup();
+	gallery.load();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-
 	ofBackground(47, 54, 64);
 	logo.draw(0, 980);
 	
 	//drawClock(); //->slow atm probs TTF
 	
-	update_state();
 	detect_marker();
-	
+	draw_strip();
+	gallery.drawSpeed(1);
+	gallery.drawStrip(0, h / 2 - 240, 480, w);
 	video->draw(0, 0, w / 4, h / 4); // view camera feed
-
-	/*if (showMarkers) {
-		for (int i = 0; i < aruco.getNumMarkers(); i++) {
-			aruco.begin(i);
-			drawMarker(0.15, ofColor::white);
-			aruco.end();
-		}
-	}
-*/
 }
 
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key) {
+void ofApp::timers() {
+	
+	frame = frame + 0.005; // change for home toggle duration
+
+	if (frame >= 2) {
+		//display = 1;
+		if (frame >= 6) {
+			//display = 0;
+			reset = frame;
+			frame = frame - reset;
+		}
+	}
+
 }
 
 //--------------------------------------------------------------
@@ -177,6 +271,11 @@ void ofApp::drawClock() {
 	clock.display(font, right, top);
 
 }
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key) {
+}
+
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {

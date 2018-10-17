@@ -10,12 +10,19 @@ class ofApp : public ofBaseApp {
 public:
 	void setup();
 	void update();
-
+	void startTimer();
+	void updateTimer();
 	void drawClock();
+	void draw_strip();
+	void populate_gallery();
+	void gallery_load(int select_gallery);
+	void gallery_home_load();
 
 	void draw();
 	void update_state();
 	void detect_marker();
+	void timers();
+	void ofApp::load_loop(int looper);
 
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -29,8 +36,11 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
+	int timeOut;
 
 	int w, h;
+
+	float curTime, prevTime, frame, reset;
 
 	int heading;
 	int body;
@@ -74,6 +84,9 @@ public:
 
 	int state;
 	int numMarkers;
+
+	int toggle;
+	vector<bool> loaded;
 
 	vector<bool> markerDetected;
 };

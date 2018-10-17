@@ -59,7 +59,7 @@ void Gallery::load() {
 		for (int i = 0; i < gallery_name.size(); i++) {
 			ofDirectory dir(gallery_name[i]);
 			//only show jpg files
-			//dir.allowExt("jpg");
+			dir.allowExt("jpg");
 			//populate the directory object
 			dir.listDir();
 			for (int j = 0; j < dir.size(); j++) {
@@ -108,6 +108,7 @@ void Gallery::drawStrip(int x, int y, int image_height, int total_width) {
 		if (x_pos - speed <= total_width && x_pos - speed + image_width - speed > 0) {
 			image_vec[i].draw(x_pos - speed, y, image_width, image_height);
 		}
+		image_vec[i].draw(x_pos - speed, y, image_width, image_height);
 	}
 }
 
