@@ -14,7 +14,6 @@ Gallery::~Gallery()
 
 
 void Gallery::setup() {	
-	
 	loaded = false;
 
 	//load all galleries
@@ -25,6 +24,10 @@ void Gallery::setup() {
 			gallery_name[i] = "gallery" + ofToString(i) + "/";
 		}
 
+		draw_min = 0;
+		draw_max = 3;
+		speed = 0;
+		total_width = 0;
 }
 
 void Gallery::setup(int gallery_selector) {
@@ -36,8 +39,23 @@ void Gallery::setup(int gallery_selector) {
 	path = "gallery" + ofToString(gallery_selector) + "/";
 	gallery_name = { path };
 
+	draw_min = 0;
+	draw_max = 3;
+	speed = 0;
+	total_width = 0;
 }
 
+void Gallery::reset_funct() {
+
+	reset = ofGetElapsedTimeMillis();
+
+}
+
+void Gallery::drawSpeed(int _speed) {
+	
+	speed = (ofGetElapsedTimeMillis() - reset) / 10 *_speed;
+
+}
 
 void Gallery::load() {
 	if (loaded == false) {
@@ -68,6 +86,8 @@ void Gallery::load() {
 		ofRandomize(image_vec);
 
 		loaded = true;
+
+		reset_funct();
 	}
 }
 
@@ -77,6 +97,29 @@ void Gallery::draw(int x, int y, int image_width, int image_height) {
 		image_vec[i].draw(x + (i * image_width), y, image_width, image_height);
 	}
 }
+
+void Gallery::drawStrip(int x, int y, int image_height, int total_width) {
+
+	for (int i = 0; i < image_vec.size(); i++) {
+
+		float	image_scale = image_height / image_vec[i].getHeight();
+		int x_pos;		
+		x_pos = x + i * image_vec[i].getWidth()*image_scale;
+		int image_width = image_vec[i].getWidth()*image_scale;
+		if (x_pos - speed <= total_width && x_pos - speed + image_width - speed > 0) {
+			image_vec[i].draw(x_pos - speed, y, image_width, image_height);
+		}
+		image_vec[i].draw(x_pos - speed, y, image_width, image_height);
+	
+		if (i == image_vec.size() - 1) {
+			if (x_pos + image_width - speed < total_width) {
+				reset_funct();
+			}
+		}
+		
+	}
+}
+
 
 void Gallery::exit() {
 
