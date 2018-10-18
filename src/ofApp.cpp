@@ -3,28 +3,7 @@
 #include "ofxOpenCv.h"
 #include "ofBitmapFont.h"
 
-//void drawMarker(float size, const ofColor & color) {
-//	ofDrawAxis(size);
-//	ofPushMatrix();
-//	// move up from the center by size*.5
-//	// to draw a box centered at that point
-//	ofTranslate(0, size*0.5, 0);
-//	ofFill();
-//	ofSetColor(color, 50);
-//	ofDrawBox(size);
-//	ofNoFill();
-//	ofSetColor(color);
-//	ofDrawBox(size);
-//	ofPopMatrix();
-//}
-
-//--------------------------------------------------------------
-void ofApp::setup() {
-
-	ofSetVerticalSync(true);
-
-	w = ofGetWidth();
-	h = ofGetHeight();
+void ofApp::align_init() {
 
 	heading = h / 15;
 	body = h / 30;
@@ -39,7 +18,19 @@ void ofApp::setup() {
 	bottom1 = h - h / 16;
 	xcentre = w / 2;
 	ycentre = h / 2;
+
+}
+
+//--------------------------------------------------------------
+void ofApp::setup() {
+
+	ofSetVerticalSync(true);
+
+	w = ofGetWidth();
+	h = ofGetHeight();
 	
+	align_init();
+
 	bDebug = false;
 
 	logo.load("FNDlogo.jpg");
@@ -53,19 +44,17 @@ void ofApp::setup() {
 	state = 0;
 	numMarkers = 3;
 	timeOut = 3000;
+	timedout = false;
 	frame = 0;
 	reset = 0;
 
 	toggle = 0;
 
 	for (int i = 0; i <= numMarkers; i++) {
-		
 		bool init = false;
 		markerDetected.push_back(init);
 		loaded.push_back(init);
-
 	}
-
 	
 	gallery.load();
 
@@ -94,13 +83,11 @@ void ofApp::setup() {
 	//showBoardImage = false;
 
 	ofEnableAlphaBlending();
-
-
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
-	//ofSetWindowTitle("OF_IDH ~ FPS:" + ofToString(ofGetFrameRate()));
+	ofSetWindowTitle("OF_IDH ~ FPS:" + ofToString(ofGetFrameRate()));
 
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
 	video->update();
@@ -121,8 +108,6 @@ void ofApp::startTimer() {
 	if(bDebug) {
 		video->draw(w / 4, h / 4, video->getWidth(), video->getHeight()); // view camera feed
 	}
-
-	gallery.draw(100, 100, 40, 40);
 }
 
 
@@ -132,6 +117,7 @@ void ofApp::updateTimer() {
 	curTime = ofGetElapsedTimeMillis();
 	if ((curTime - prevTime) > timeOut)
 	{
+		timedout = true;
 		//cout << "marker timed out!" << endl;
 		for (int i = 0; i < markerDetected.size(); i++) {
 			markerDetected[i] = false;
@@ -139,46 +125,10 @@ void ofApp::updateTimer() {
 
 		state = 1;
 		//cout << "reset timer" << endl;
-
 	}
 
 }
 
-
-//------------------------------------------------------------------
-void ofApp::update_state() {
-
-	if (state != 0) return;
-		state = 0;
-	for (int i = 0; i < markerDetected.size(); i++) {
-
-		if (markerDetected[i]) {
-				state = 1 + i;
-			}
-	}
-}
-//----------------------------------------------------------------
-void ofApp::detect_marker() {
-
-	updateTimer();
-
-	for (int i = 0; i <= numMarkers; i++) {
-
-
-		if (i == aruco.getNumMarkers()) {
-			markerDetected[i] = true;
-			if (i > 0) {
-				//cout << "found markers: " + ofToString(i) << endl;
-				startTimer();
-				//cout << "starttimer" << endl;
-			}
-		}
-		else
-		{
-			markerDetected[i] = false;
-		}
-	}
-}
 //---------------------------------------------------------------------
 void ofApp::load_loop(int looper) {
 
@@ -186,9 +136,14 @@ void ofApp::load_loop(int looper) {
 
 	if (loaded[looper] == false) {
 		gallery.exit();
-		//if (looper == 0) { gallery_home_load(); }
-		gallery_load(looper - 1);
-		cout << "gallery loaded" + ofToString(looper - 1) << endl;
+		if (looper == 0) {
+			gallery_home_load();
+			cout << "gallery loaded: home" << endl;
+		}
+		else {
+			gallery_load(looper - 1);
+			cout << "gallery loaded: " + ofToString(looper - 1) << endl;
+		}
 		loaded[looper] = true;
 	}
 
@@ -200,37 +155,12 @@ void ofApp::load_loop(int looper) {
 			loaded[j] = false;
 		}
 	}
-//<<<<<<< HEAD
-//	ofDrawBitmapString("markers detected: " + ofToString(aruco.getNumMarkers()), 20, 20);
-//	ofDrawBitmapString("fps " + ofToString(ofGetFrameRate()), 20, 40);
-//	ofDrawBitmapString("m toggles markers", 20, 60);
-//	ofDrawBitmapString("b toggles board", 20, 80);
-//	ofDrawBitmapString("i toggles board image", 20, 100);
-//	ofDrawBitmapString("s saves board image", 20, 120);
-//	ofDrawBitmapString("0-9 saves marker image", 20, 140);\
-	
-}
-
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key) {
-	//if (key == 'm') showMarkers = !showMarkers;
-	//else if (key == 'b') showBoard = !showBoard;
-	//else if (key == 'i') showBoardImage = !showBoardImage;
-	//else if (key == 's') board.save("boardimage.png");
-	//else if (key >= '0' && key <= '9') {
-	//	// there's 1024 different markers
-	//	int markerID = key - '0';
-	//	aruco.getMarkerImage(markerID, 240, marker);
-	//	marker.save("marker" + ofToString(markerID) + ".png");
-	//}
-	if (key == ' ') bDebug = !bDebug;
-	
-	//cout << "toggle after: " + ofToString(toggle) << endl;
 	//cout << ofToString(loaded) << endl;
+	//cout << ofToString(timedout) << endl;
 }
 
 //---------------------------------------------------------------------
-void ofApp::draw_strip() {
+void ofApp::check_markers() {
 	
 	for (auto& m : aruco.getMarkers()) {
 		
@@ -239,18 +169,32 @@ void ofApp::draw_strip() {
 
 		for (int i = 0; i <= numMarkers; i++) {
 			if (i == 1 && marker == "964") {
+				//timedout = false;
+				startTimer();
 				load_loop(i);
+				timedout = false;
 			}
 			if (i == 2 && marker == "691") {
+				//timedout = false;
+				startTimer();
 				load_loop(i);
+				timedout = false;
 			}
 			if (i == 3 && marker == "268") {
+				//timedout = false;
+				startTimer();
 				load_loop(i);
+				timedout = false;
 			}
+
 			//if (i == 0){
 			//	load_loop(i);
 			//}
 		}
+	}
+
+	if (timedout == true) {
+		load_loop(0);
 	}
 
 }
@@ -269,18 +213,18 @@ void ofApp::gallery_home_load() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	ofBackground(47, 54, 64);
-	logo.draw(0, 980);
-	
-	//drawClock(); //->slow atm probs TTF
-	
-	detect_marker();
-	draw_strip();
-	gallery.drawSpeed(1);
-	gallery.drawStrip(0, h / 2 - 240, 480, w);
-	video->draw(0, 0, w / 4, h / 4); // view camera feed
-}
 
+	ofBackground(47, 54, 64); // blue background
+	logo.draw(0, 980); // film never die logo
+	drawClock(); // clock
+	updateTimer(); // timers
+	check_markers(); // run marker events
+	gallery.drawSpeed(1); // draw gallery speed
+	gallery.drawStrip(0, h / 2 - 240, 480, w); // draw the current loaded gallery
+	video->draw(0, 0, w / 4, h / 4); // view camera feed
+
+}
+//------------------------------------------------------------------
 void ofApp::timers() {
 	
 	frame = frame + 0.005; // change for home toggle duration
@@ -304,9 +248,11 @@ void ofApp::drawClock() {
 }
 
 //--------------------------------------------------------------
-//void ofApp::keyPressed(int key) {
-//}
+void ofApp::keyPressed(int key) {
 
+	if (key == ' ') bDebug = !bDebug;
+
+}
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {

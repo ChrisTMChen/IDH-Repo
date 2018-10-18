@@ -8,21 +8,23 @@
 class ofApp : public ofBaseApp {
 
 public:
+
 	void setup();
+
+	void align_init();
+
 	void update();
 	void draw();
+
 	void startTimer();
 	void updateTimer();
+	void timers();
+
 	void drawClock();
-	void draw_strip();
+	void check_markers();
+	void load_loop(int looper);
 	void gallery_load(int select_gallery);
 	void gallery_home_load();
-
-	//void draw();
-	void update_state();
-	void detect_marker();
-	void timers();
-	void load_loop(int looper);
 
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -58,6 +60,8 @@ public:
 	int bottom;
 	int bottom1;
 
+	bool timedout;
+
 	ofImage logo;
 	int fontsize;
 
@@ -80,7 +84,7 @@ public:
 	//bool showBoardImage;
 	ofImage board;
 	ofImage marker;
-	
+
 	bool bDebug;
 	int state;
 	int numMarkers;
@@ -91,5 +95,3 @@ public:
 	vector<bool> markerDetected;
 
 };
-
-	//------------------------------------------------
