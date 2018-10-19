@@ -9,13 +9,19 @@ public:
 	Gallery();
 	~Gallery();
 
-	void setup(int 	gallery_selector);
-	void setup();
+	void setup(int fontsize);
+	void load_film_logos();
+
+
+	void strip_setup(int 	gallery_selector);
+	void strip_setup();
 
 	void load();
-	void draw(int x, int y, int image_width, int image_height);
 	void drawStrip(int x, int y, int image_height, int total_width);
 	void drawSpeed(int _speed);
+	void labels(vector<bool> loaded, int x, int y);
+	void filmLogos(vector<bool> loaded, int x, int y, int width, int height);
+	
 	void exit();
 	void reset_funct();
 	int h;
@@ -37,6 +43,10 @@ public:
 	int reset;
 	int draw_min, draw_max, draw_position, total_width;
 	float speed;
+
+	ofTrueTypeFont font;
+
+	vector<ofImage> film_logos;
 };
 
 

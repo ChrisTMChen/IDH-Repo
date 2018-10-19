@@ -12,37 +12,50 @@ Gallery::~Gallery()
 	exit();
 }
 
+void Gallery::load_film_logos() {
 
-void Gallery::setup() {	
-	loaded = false;
+	ofDirectory dir("film_logos/");
+	dir.listDir();
+	for (int i = 0; i < dir.size(); i++) {
+		ofImage img;
+		img.load(dir.getPath(i));
+		film_logos.push_back(img);
+	}
+	dir.close();
 
-	//load all galleries
-
-		for (int i = 0; i <= 2; i++) {
-			string name;
-			gallery_name.push_back(name);
-			gallery_name[i] = "gallery" + ofToString(i) + "/";
-		}
-
-		draw_min = 0;
-		draw_max = 3;
-		speed = 0;
-		total_width = 0;
 }
 
-void Gallery::setup(int gallery_selector) {
-
-	//load specific gallery
-
-	loaded = false;
-
-	path = "gallery" + ofToString(gallery_selector) + "/";
-	gallery_name = { path };
-
+void Gallery::setup(int fontsize) {
+	
+	load_film_logos();
+	
 	draw_min = 0;
 	draw_max = 3;
 	speed = 0;
 	total_width = 0;
+
+	font.load("fonts/Roboto/Roboto-Regular.ttf", fontsize, true, true, true);
+}
+
+void Gallery::strip_setup() {
+
+	//load all galleries
+	loaded = false;
+	for (int i = 0; i <= 2; i++) {
+		string name;
+		gallery_name.push_back(name);
+		gallery_name[i] = "gallery" + ofToString(i) + "/";
+	}
+
+}
+
+void Gallery::strip_setup(int gallery_selector) {
+
+	//load specific gallery
+	loaded = false;
+	path = "gallery" + ofToString(gallery_selector) + "/";
+	gallery_name = { path };
+
 }
 
 void Gallery::reset_funct() {
@@ -91,13 +104,6 @@ void Gallery::load() {
 	}
 }
 
-void Gallery::draw(int x, int y, int image_width, int image_height) {
-	ofSetColor(255);
-	for (int i = 0; i < image_vec.size(); i++) {
-		image_vec[i].draw(x + (i * image_width), y, image_width, image_height);
-	}
-}
-
 void Gallery::drawStrip(int x, int y, int image_height, int total_width) {
 
 	for (int i = 0; i < image_vec.size(); i++) {
@@ -120,6 +126,26 @@ void Gallery::drawStrip(int x, int y, int image_height, int total_width) {
 	}
 }
 
+void Gallery::labels(vector<bool> loaded, int x, int y) {
+
+	vector<bool> _loaded = loaded;
+	for (int i = 0; i < _loaded.size(); i++) {
+		if (loaded[i] == true) {
+			font.drawString("Gallery: " + ofToString(i), x, y);
+		}
+	}
+}
+
+void Gallery::filmLogos(vector<bool> loaded, int x, int y, int width, int height) {
+
+	vector<bool> _loaded = loaded;
+	for (int i = 1; i < _loaded.size(); i++) {
+		if (loaded[i] == true) {
+			film_logos[i-1].draw(x, y, width, height);
+		}
+	}
+
+}
 
 void Gallery::exit() {
 
