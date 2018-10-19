@@ -25,22 +25,30 @@ void ofApp::align_init() {
 void ofApp::setup() {
 
 	ofSetVerticalSync(true);
+		
+	bDebug = false;
+	
+	//interface
+	logo.load("FNDlogo.jpg");
 
 	w = ofGetWidth();
 	h = ofGetHeight();
-	
+
 	align_init();
 
-	bDebug = false;
-
-	logo.load("FNDlogo.jpg");
-
+	//fonts
 	font.load("fonts/Roboto/Roboto-Regular.ttf", body, true, true, true);
 	font1.load("fonts/Roboto/Roboto-Bold.ttf", body, true, true, true);
 
+	//clock
 	clock.setup(body);
-	gallery.setup();
 	
+
+	//gallery
+	gallery.setup(body);
+	gallery.strip_setup(body);
+	gallery.load();
+		
 	state = 0;
 	numMarkers = 3;
 	timeOut = 3000;
@@ -55,8 +63,6 @@ void ofApp::setup() {
 		markerDetected.push_back(init);
 		loaded.push_back(init);
 	}
-	
-	gallery.load();
 
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
 	useVideo = false;
@@ -103,7 +109,6 @@ void ofApp::startTimer() {
 
 	ofBackground(47, 54, 64);
 	logo.draw(0, 980);
-//	clock.display(right, top); //->slow atm probs TTF
 
 	if(bDebug) {
 		video->draw(w / 4, h / 4, video->getWidth(), video->getHeight()); // view camera feed
@@ -186,10 +191,6 @@ void ofApp::check_markers() {
 				load_loop(i);
 				timedout = false;
 			}
-
-			//if (i == 0){
-			//	load_loop(i);
-			//}
 		}
 	}
 
@@ -201,13 +202,13 @@ void ofApp::check_markers() {
 
 //--------------------------------------------------------------
 void ofApp::gallery_load(int select_gallery){
-	gallery.setup(select_gallery);
+	gallery.strip_setup(select_gallery);
 	gallery.load();
 }
 
 //--------------------------------------------------------------
 void ofApp::gallery_home_load() {
-	gallery.setup();
+	gallery.strip_setup();
 	gallery.load();
 }
 
@@ -219,8 +220,11 @@ void ofApp::draw() {
 	drawClock(); // clock
 	updateTimer(); // timers
 	check_markers(); // run marker events
+	
 	gallery.drawSpeed(1); // draw gallery speed
 	gallery.drawStrip(0, h / 2 - 240, 480, w); // draw the current loaded gallery
+	gallery.labels(loaded, left, bottom);// draw gallery labels
+	gallery.filmLogos(loaded, left, bottom1, w / 12, h / 12); // draw film logos
 	video->draw(0, 0, w / 4, h / 4); // view camera feed
 
 }
