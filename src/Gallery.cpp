@@ -68,7 +68,7 @@ void Gallery::reset_funct() {
 
 }
 
-void Gallery::drawSpeed(int _speed) {
+void Gallery::drawSpeed(float _speed) {
 	
 	speed = (ofGetElapsedTimeMillis() - reset) / 10 *_speed;
 

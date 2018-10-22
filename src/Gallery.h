@@ -18,7 +18,7 @@ public:
 
 	void load();
 	void drawStrip(int x, int y, int total_width, int image_height);
-	void drawSpeed(int _speed);
+	void drawSpeed(float _speed);
 	void labels(vector<bool> loaded, int x, int y);
 	void filmLogos(vector<bool> loaded, int x, int y, int width, int height);
 	

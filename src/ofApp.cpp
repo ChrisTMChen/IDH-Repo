@@ -88,7 +88,7 @@ void ofApp::setup() {
 		video = &grabber;
 	}
 
-    aruco.setThreaded(false);
+    //aruco.setThreaded(false);
 	aruco.setup("aruco/intrinsics.int", video->getWidth(), video->getHeight(), boardName);
 	aruco.getBoardImage(board.getPixels());
 	board.update();
@@ -179,7 +179,6 @@ void ofApp::check_markers() {
 	for (auto& m : aruco.getMarkers()) {
 		
         string marker = ofToString(m).substr(0, 3);
-        cout << "marker: " + marker << endl;
 
         for (int i = 0; i < numMarkers; i++) {
             if (i == 1 && marker == "964") {
@@ -246,12 +245,15 @@ void ofApp::draw() {
     */
     check_markers(); // run marker events
 	
-	gallery.drawSpeed(1); // draw gallery speed
+	gallery.drawSpeed(0.1f); // draw gallery speed
 	gallery.drawStrip(0, h / 2 - h/4, w, h/2); // draw the current loaded gallery
 	gallery.labels(loaded, left, bottom);// draw gallery labels
 	gallery.filmLogos(loaded, left, bottom1, w / 12, h / 12); // draw film logos
 	
-	video->draw(0, 0, w / 4, h / 4); // view camera feed
+	//video->draw(0, 0, w / 4, h / 4); // view camera feed
+	//ofLogNotice() << "FPS: " << ofGetFrameRate();
+	font.drawString("Fps: " + ofToString(ofGetFrameRate()),200,ofGetHeight()-100);
+	
 
 }
 //------------------------------------------------------------------
