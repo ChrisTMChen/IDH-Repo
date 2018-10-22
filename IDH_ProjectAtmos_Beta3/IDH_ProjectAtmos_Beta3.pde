@@ -98,7 +98,7 @@ void setup() {
   //feed1 = new FilmFeed1();
   feed1 = new Feed("film feed","FilmNeverDie Iro 200","iro200logo.jpg");
   feed2 = new Feed("film feed","Fujifilm industrial 400", "fuji400logo.jpg");
-  feed3 = new Feed("film feed","Fujifilm industrial 400","ilford400logo.jpg");
+  feed3 = new Feed("film feed","Ilford HP5 400","ilford400logo.jpg");
   //feed4 = new CameraFeed1();
 
   /* setup animation */
