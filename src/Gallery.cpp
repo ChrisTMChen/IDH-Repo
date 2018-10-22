@@ -68,40 +68,56 @@ void Gallery::draw_film_name()
 {
     string textString = "";
 
-    if(gallery_id == 1) {
-        textString = "test1";
+    if(gallery_id == 0) {
+        textString = "Agfa Vista Plus 200";
+    }
+    else if(gallery_id == 1) {
+        textString = "FilmNeverDie IRO 200";
     }
     else if(gallery_id == 2) {
-        textString = "test2";
+        textString = "Fujifilm C 200";
     }
     else if(gallery_id == 3) {
-        textString = "test3";
+        textString = "Fujifilm Industrial 100";
     }
     else if(gallery_id == 4) {
-        textString = "test4";
+        textString = "Fujifilm Industrial 400";
     }
     else if(gallery_id == 5) {
-        textString = "test5";
+        textString = "Fujifilm X-TRA 400";
     }
     else if(gallery_id == 6) {
-        textString = "test";
+        textString = "Ilford FP4 125";
     }
     else if(gallery_id == 7) {
-        textString = "test";
+        textString = "Ilford HP5 400";
     }
     else if(gallery_id == 8) {
-        textString = "test";
+        textString = "Ilford XP2 400";
     }
     else if(gallery_id == 9) {
-        textString = "test";
+        textString = "JCH Street Pan 400";
     }
     else if(gallery_id == 10) {
-        textString = "test";
+        textString = "Kodak Colour Plus 200";
     }
     else if(gallery_id == 11) {
-        textString = "test";
-    } else {
-        textString = "";
+        textString = "Kodak Ektar 100";
+    }
+    else if(gallery_id == 12) {
+        textString = "Kodak Gold 200";
+    }
+    else if(gallery_id == 13) {
+        textString = "Kodak Portra 800";
+    }
+    else if(gallery_id == 14) {
+        textString = "Kodak TX 400";
+    }
+    else if(gallery_id == 15) {
+        textString = "Kodak Ultramax 400";
+    }
+    else {
+        textString = "Home";
     }
 
     font.drawString(textString,320,1038);
@@ -215,7 +231,7 @@ void Gallery::labels(vector<bool> loaded, int x, int y) {
 	vector<bool> _loaded = loaded;
 	for (int i = 0; i < _loaded.size(); i++) {
 		if (loaded[i] == true) {
-			font.drawString("Gallery: " + ofToString(i), x, y);
+            //font.drawString("Gallery: " + ofToString(i), x, y);
 		}
 	}
 }
@@ -232,6 +248,8 @@ void Gallery::filmLogos(vector<bool> loaded, int x, int y, int width, int height
 }
 
 void Gallery::exit() {
+    gallery_id = -1;
+
     //loader.stopThread();
     delete loader;
     loader = new ofxThreadedImageLoader();

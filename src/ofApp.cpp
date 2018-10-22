@@ -311,7 +311,7 @@ void ofApp::draw() {
 
     check_markers(); // run marker events
 	
-    gallery.drawSpeed(0.5f); // draw gallery speed
+    gallery.drawSpeed(0.3f); // draw gallery speed
 	gallery.drawStrip(0, h / 2 - h/4, w, h/2); // draw the current loaded gallery
 	gallery.labels(loaded, left, bottom);// draw gallery labels
     gallery.filmLogos(loaded, 0, 830, 100, 100); // draw film logos
@@ -323,7 +323,7 @@ void ofApp::draw() {
 
     drawClock(); // clock
 
-    font.drawString("Fps: " + ofToString(ofGetFrameRate()),200,ofGetHeight()-200);
+   // font.drawString("Fps: " + ofToString(ofGetFrameRate()),200,ofGetHeight()-200);
 }
 //------------------------------------------------------------------
 void ofApp::timers() {
