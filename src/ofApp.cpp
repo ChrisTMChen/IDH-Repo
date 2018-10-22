@@ -33,6 +33,7 @@ void ofApp::setup() {
 
 	ofSetVerticalSync(true);
 
+	ofHideCursor();
    // ofSetLogLevel(OF_LOG_VERBOSE);
 		
 	bDebug = false;
