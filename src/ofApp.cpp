@@ -22,6 +22,13 @@ void ofApp::align_init() {
 }
 
 //--------------------------------------------------------------
+void ofApp::exit()
+{
+    ofLogNotice() << "Exiting....";
+
+}
+
+//--------------------------------------------------------------
 void ofApp::setup() {
 
 	ofSetVerticalSync(true);
@@ -52,7 +59,7 @@ void ofApp::setup() {
 //	gallery.load();
 		
 	state = 0;
-	numMarkers = 3;
+    numMarkers = 16;
 	timeOut = 3000;
 	timedout = false;
 	frame = 0;
@@ -81,7 +88,7 @@ void ofApp::setup() {
 		video = &grabber;
 	}
 
-	//aruco.setThreaded(true);
+    aruco.setThreaded(false);
 	aruco.setup("aruco/intrinsics.int", video->getWidth(), video->getHeight(), boardName);
 	aruco.getBoardImage(board.getPixels());
 	board.update();
@@ -95,7 +102,7 @@ void ofApp::setup() {
 
 //--------------------------------------------------------------
 void ofApp::update() {
-	ofSetWindowTitle("OF_IDH ~ FPS:" + ofToString(ofGetFrameRate()));
+    //ofSetWindowTitle("OF_IDH ~ FPS:" + ofToString(ofGetFrameRate()));
 
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
 	video->update();
@@ -171,28 +178,34 @@ void ofApp::check_markers() {
 	
 	for (auto& m : aruco.getMarkers()) {
 		
-		string marker = ofToString(m).substr(0, 3);
-		//cout << "marker: " + marker << endl;
+        string marker = ofToString(m).substr(0, 3);
+        cout << "marker: " + marker << endl;
 
-		for (int i = 0; i <= numMarkers; i++) {
-			if (i == 1 && marker == "964") {
+        for (int i = 0; i < numMarkers; i++) {
+            if (i == 1 && marker == "964") {
+				//timedout = false;
+				startTimer();
+				load_loop(i);
+				timedout = false;
+            }
+            else if (i == 2 && marker == "691") {
 				//timedout = false;
 				startTimer();
 				load_loop(i);
 				timedout = false;
 			}
-			if (i == 2 && marker == "691") {
+            else if (i == 3 && marker == "268") {
 				//timedout = false;
 				startTimer();
 				load_loop(i);
 				timedout = false;
 			}
-			if (i == 3 && marker == "268") {
-				//timedout = false;
-				startTimer();
-				load_loop(i);
-				timedout = false;
-			}
+            else if (i == 4 && marker == "286") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
 		}
 	}
 
@@ -223,7 +236,15 @@ void ofApp::draw() {
 	logo.draw(0, 980); // film never die logo
 	drawClock(); // clock
 	updateTimer(); // timers
-	check_markers(); // run marker events
+
+    /*
+    if(gallery.loader.isThreadRunning())
+    {
+        cout << "Still loading" << endl;
+        return;
+    }
+    */
+    check_markers(); // run marker events
 	
 	gallery.drawSpeed(1); // draw gallery speed
 	gallery.drawStrip(0, h / 2 - h/4, w, h/2); // draw the current loaded gallery

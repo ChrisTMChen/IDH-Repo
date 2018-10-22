@@ -4,6 +4,7 @@
 
 Gallery::Gallery()
 {
+    loader = new ofxThreadedImageLoader();
 }
 
 
@@ -80,6 +81,7 @@ void Gallery::load() {
 		//--- look in folders and make string vector of paths
 		for (int i = 0; i < gallery_name.size(); i++) {
 			
+            ofLogNotice() << "Load Gallery: " << gallery_name[i];
 			ofDirectory dir(gallery_name[i]);
 			//only show jpg files
 			dir.allowExt("jpg");
@@ -110,7 +112,7 @@ void Gallery::load() {
 		ofRandomize(image_paths);
 		
 		for (int i = 0; i < image_vec.size(); i++) {
-			loader.loadFromDisk(image_vec[i], image_paths[i]);
+            loader->loadFromDisk(image_vec[i], image_paths[i]);
 
 		}
 		loaded = true;
@@ -121,6 +123,8 @@ void Gallery::load() {
 }
 
 void Gallery::drawStrip(int x, int y, int total_width, int image_height) {
+
+if(loaded) {
 
 	ofSetColor(255);
 	//ofRect(0, 0, total_width, image_height);
@@ -152,6 +156,8 @@ void Gallery::drawStrip(int x, int y, int total_width, int image_height) {
 	}
 }
 
+}
+
 
 void Gallery::labels(vector<bool> loaded, int x, int y) {
 
@@ -175,7 +181,9 @@ void Gallery::filmLogos(vector<bool> loaded, int x, int y, int width, int height
 }
 
 void Gallery::exit() {
-	loader.stopThread();
+    //loader.stopThread();
+    delete loader;
+    loader = new ofxThreadedImageLoader();
 
 	image_vec.clear();
 	image_paths.clear();

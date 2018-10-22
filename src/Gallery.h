@@ -43,7 +43,7 @@ public:
 
 	ofTrueTypeFont font;
 
-	ofxThreadedImageLoader loader;
+    ofxThreadedImageLoader *loader;
 	vector<ofImage> film_logos;
 };
 
