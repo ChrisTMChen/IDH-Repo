@@ -25,7 +25,7 @@ void ofApp::align_init() {
 void ofApp::exit()
 {
     ofLogNotice() << "Exiting....";
-
+    delete aruco;
 }
 
 //--------------------------------------------------------------
@@ -37,6 +37,8 @@ void ofApp::setup() {
 		
 	bDebug = false;
 	
+    aruco = new ofxAruco();
+
 	//interface
 	logo.load("FNDlogo.jpg");
 
@@ -59,7 +61,7 @@ void ofApp::setup() {
 //	gallery.load();
 		
 	state = 0;
-    numMarkers = 16;
+    numMarkers = 17;
 	timeOut = 3000;
 	timedout = false;
 	frame = 0;
@@ -89,9 +91,9 @@ void ofApp::setup() {
 	}
 
     //aruco.setThreaded(false);
-	aruco.setup("aruco/intrinsics.int", video->getWidth(), video->getHeight(), boardName);
-	aruco.getBoardImage(board.getPixels());
-	board.update();
+    aruco->setup("aruco/intrinsics.int", video->getWidth(), video->getHeight(), boardName);
+    aruco->getBoardImage(board.getPixels());
+    board.update();
 
 	showMarkers = true;
 	//showBoard = true;
@@ -107,7 +109,7 @@ void ofApp::update() {
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
 	video->update();
 	if (video->isFrameNew()) {
-		aruco.detectBoards(video->getPixels());
+        aruco->detectBoards(video->getPixels());
 	}
 }
 
@@ -132,7 +134,7 @@ void ofApp::updateTimer() {
 	if ((curTime - prevTime) > timeOut)
 	{
 		timedout = true;
-		//cout << "marker timed out!" << endl;
+        //cout << "marker timed out!" << endl;
 		for (int i = 0; i < markerDetected.size(); i++) {
 			markerDetected[i] = false;
 		}
@@ -176,7 +178,7 @@ void ofApp::load_loop(int looper) {
 //---------------------------------------------------------------------
 void ofApp::check_markers() {
 	
-	for (auto& m : aruco.getMarkers()) {
+    for (auto& m : aruco->getMarkers()) {
 		
         string marker = ofToString(m).substr(0, 3);
 
@@ -205,12 +207,84 @@ void ofApp::check_markers() {
                 load_loop(i);
                 timedout = false;
             }
-		}
-	}
+            else if (i == 5 && marker == "528") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 6 && marker == "868") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 7 && marker == "132") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 8 && marker == "538") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 9 && marker == "540") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 10 && marker == "948") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 11 && marker == "581") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 12 && marker == "173") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 13 && marker == "222") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 14 && marker == "761") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 15 && marker == "903") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+            else if (i == 16 && marker == "154") {
+                //timedout = false;
+                startTimer();
+                load_loop(i);
+                timedout = false;
+            }
+        }
+    }
 
-	if (timedout == true) {
-		load_loop(0);
-	}
+    if (timedout == true) {
+        load_loop(0);
+    }
 
 }
 
@@ -233,28 +307,23 @@ void ofApp::draw() {
 
 	ofBackground(47, 54, 64); // blue background
 	logo.draw(0, 980); // film never die logo
-	drawClock(); // clock
 	updateTimer(); // timers
 
-    /*
-    if(gallery.loader.isThreadRunning())
-    {
-        cout << "Still loading" << endl;
-        return;
-    }
-    */
     check_markers(); // run marker events
 	
-	gallery.drawSpeed(0.1f); // draw gallery speed
+    gallery.drawSpeed(0.5f); // draw gallery speed
 	gallery.drawStrip(0, h / 2 - h/4, w, h/2); // draw the current loaded gallery
 	gallery.labels(loaded, left, bottom);// draw gallery labels
-	gallery.filmLogos(loaded, left, bottom1, w / 12, h / 12); // draw film logos
-	
-	//video->draw(0, 0, w / 4, h / 4); // view camera feed
-	//ofLogNotice() << "FPS: " << ofGetFrameRate();
-	font.drawString("Fps: " + ofToString(ofGetFrameRate()),200,ofGetHeight()-100);
-	
+    gallery.filmLogos(loaded, 0, 830, 100, 100); // draw film logos
+    gallery.draw_film_name();
 
+    #if !defined(TARGET_RASPBERRY_PI)
+    //video->draw(0, 0, w / 4, h / 4); // view camera feed
+    #endif
+
+    drawClock(); // clock
+
+    font.drawString("Fps: " + ofToString(ofGetFrameRate()),200,ofGetHeight()-200);
 }
 //------------------------------------------------------------------
 void ofApp::timers() {

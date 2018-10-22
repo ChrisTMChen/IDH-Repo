@@ -17,6 +17,7 @@ void Gallery::load_film_logos() {
 
 	ofDirectory dir("film_logos/");
 	dir.listDir();
+    dir.sort();
     for (unsigned int i = 0; i < dir.size(); i++) {
 		ofImage img;
 		img.load(dir.getPath(i));
@@ -35,7 +36,7 @@ void Gallery::setup(int fontsize, int width, int height) {
 	speed = 0;
 	total_width = 0;
 
-	font.load("fonts/Roboto/Roboto-Regular.ttf", fontsize, true, true, true);
+    font.load("fonts/FuturaPTBook.otf", fontsize, true, true, true);
 
 }
 
@@ -53,13 +54,57 @@ void Gallery::strip_setup() {
 
 }
 
-void Gallery::strip_setup(int gallery_selector) {
+void Gallery::strip_setup(int id) {
 
 	//load specific gallery
+    gallery_id  = id;
 	loaded = false;
-	path = "galleries/gallery" + ofToString(gallery_selector) + "/";
+    path = "galleries/gallery" + ofToString(id) + "/";
 	gallery_name = { path };
 
+}
+
+void Gallery::draw_film_name()
+{
+    string textString = "";
+
+    if(gallery_id == 1) {
+        textString = "test1";
+    }
+    else if(gallery_id == 2) {
+        textString = "test2";
+    }
+    else if(gallery_id == 3) {
+        textString = "test3";
+    }
+    else if(gallery_id == 4) {
+        textString = "test4";
+    }
+    else if(gallery_id == 5) {
+        textString = "test5";
+    }
+    else if(gallery_id == 6) {
+        textString = "test";
+    }
+    else if(gallery_id == 7) {
+        textString = "test";
+    }
+    else if(gallery_id == 8) {
+        textString = "test";
+    }
+    else if(gallery_id == 9) {
+        textString = "test";
+    }
+    else if(gallery_id == 10) {
+        textString = "test";
+    }
+    else if(gallery_id == 11) {
+        textString = "test";
+    } else {
+        textString = "";
+    }
+
+    font.drawString(textString,320,1038);
 }
 
 void Gallery::reset_funct() {
@@ -70,7 +115,7 @@ void Gallery::reset_funct() {
 
 void Gallery::drawSpeed(float _speed) {
 	
-	speed = (ofGetElapsedTimeMillis() - reset) / 10 *_speed;
+    speed = (ofGetElapsedTimeMillis() - reset) / 10 *_speed;
 
 }
 
@@ -122,30 +167,34 @@ void Gallery::load() {
 
 }
 
-void Gallery::drawStrip(int x, int y, int total_width, int image_height) {
+void Gallery::drawStrip(int xoffset, int yoffset, int total_width, int image_height) {
 
 if(loaded) {
 
 	ofSetColor(255);
 	//ofRect(0, 0, total_width, image_height);
 	float x_pos = 0;
-	for (int i = 0; i < image_vec.size(); i++) {
+    float prev_image_width = 0;
+    for (unsigned int i = 0; i < image_vec.size(); i++) {
 
-		float	image_scale = image_height / image_vec[i].getHeight();
+        float image_scale = image_height / image_vec[i].getHeight();
 		float new_width = image_vec[i].getWidth()*image_scale;
 
 		float image_width = new_width;
+        //cout << "image iwdth = " << image_width << endl;
 
-		x_pos = x + x_pos + image_width;
+        x_pos = x_pos + prev_image_width;
 
 		if (x_pos - speed <= total_width && x_pos + image_width - speed > 0) {
 
-			image_vec[i].draw(x_pos - speed, y, image_width, image_height);
+            image_vec[i].draw(x_pos - speed + xoffset, yoffset, image_width, image_height);
 
+            // draw name
 			string str = image_paths[i];
 			string newstr = str.substr(str.find_last_of("\\") + 1);
-
-			font.drawString(newstr, x_pos - speed, y);
+            //font.drawString(newstr, x_pos - speed, yoffset);
+            //font.drawString(ofToString(image_width), x_pos - speed, yoffset);
+            //font.drawString(ofToString(x_pos) + "  "+ ofToString(image_width), x_pos - speed, yoffset);
 		}
 
 		if (i == image_vec.size() - 1) {
@@ -153,6 +202,8 @@ if(loaded) {
 				reset_funct();
 			}
 		}
+
+        prev_image_width = image_width;
 	}
 }
 
@@ -174,7 +225,7 @@ void Gallery::filmLogos(vector<bool> loaded, int x, int y, int width, int height
 	vector<bool> _loaded = loaded;
 	for (int i = 1; i < _loaded.size(); i++) {
 		if (loaded[i] == true) {
-			film_logos[i-1].draw(x, y, width, height);
+            film_logos[i-1].draw(x, y, width, height);
 		}
 	}
 

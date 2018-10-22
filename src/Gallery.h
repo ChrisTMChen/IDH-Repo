@@ -15,6 +15,7 @@ public:
 
 	void strip_setup(int gallery_selector);
 	void strip_setup();
+    void draw_film_name();
 
 	void load();
 	void drawStrip(int x, int y, int total_width, int image_height);
@@ -26,6 +27,8 @@ public:
 	void reset_funct();
 	int h;
 	int m;
+
+    int gallery_id;
 
 	string path;
 

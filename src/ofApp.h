@@ -78,7 +78,7 @@ public:
 
 	ofBaseVideoDraws * video;
 
-	ofxAruco aruco;
+    ofxAruco *aruco;
 	bool useVideo;
 	bool showMarkers;
 	//bool showBoard;
