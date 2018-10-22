@@ -8,13 +8,24 @@
 class ofApp : public ofBaseApp {
 
 public:
+
 	void setup();
+
+	void align_init();
+
 	void update();
+	void draw();
+    void exit();
+
+	void startTimer();
+	void updateTimer();
+	void timers();
 
 	void drawClock();
-
-	void draw();
-
+	void check_markers();
+	void load_loop(int looper);
+	void gallery_load(int select_gallery);
+	void gallery_home_load();
 
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -28,8 +39,11 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
+	int timeOut;
 
 	int w, h;
+
+	float curTime, prevTime, frame, reset;
 
 	int heading;
 	int body;
@@ -47,6 +61,8 @@ public:
 	int bottom;
 	int bottom1;
 
+	bool timedout;
+
 	ofImage logo;
 	int fontsize;
 
@@ -62,11 +78,21 @@ public:
 
 	ofBaseVideoDraws * video;
 
-	ofxAruco aruco;
+    ofxAruco *aruco;
 	bool useVideo;
 	bool showMarkers;
-	bool showBoard;
-	bool showBoardImage;
+	//bool showBoard;
+	//bool showBoardImage;
 	ofImage board;
 	ofImage marker;
+
+	bool bDebug;
+	int state;
+	int numMarkers;
+
+	int toggle;
+	vector<bool> loaded;
+
+	vector<bool> markerDetected;
+
 };

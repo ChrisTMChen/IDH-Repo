@@ -4,11 +4,16 @@
 
 Clock::Clock()
 {
+	
 }
 
 
 Clock::~Clock()
 {
+}
+
+void Clock::setup(int fontsize) {
+    font.load("fonts/fonts/FuturaPTBold.otf", fontsize, true, true, true);
 }
 
 
@@ -17,11 +22,9 @@ void Clock::getTime() {
 	m = ofGetMinutes();
 }
 
-void Clock::display(ofTrueTypeFont _font, int _x, int _y) {
-
-	int x = _x;
-	int y = _y;
-
-	_font.drawString(ofToString(h) + ":" + ofToString(m, 2), x, y);
+void Clock::display(int x, int y) {
+	
+	getTime();
+	font.drawString(ofToString(h) + ":" + ofToString(m, 2), x, y);
 
 }

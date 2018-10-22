@@ -1,0 +1,7 @@
+obj/
+bin/IDH-Repo
+IDH-Repo.qbs.user
+bin/IDH-Repo_debug
+build/
+
+

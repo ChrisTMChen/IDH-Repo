@@ -1,0 +1,5 @@
+ofxAruco
+ofxCv
+ofxOpenCv
+ofxPoco
+ofxThreadedImageLoader
