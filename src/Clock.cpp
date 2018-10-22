@@ -13,7 +13,7 @@ Clock::~Clock()
 }
 
 void Clock::setup(int fontsize) {
-	font.load("fonts/Roboto/Roboto-Regular.ttf", fontsize, true, true, true);
+    font.load("fonts/fonts/FuturaPTBold.otf", fontsize, true, true, true);
 }
 
 

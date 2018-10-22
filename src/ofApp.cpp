@@ -25,6 +25,8 @@ void ofApp::align_init() {
 void ofApp::setup() {
 
 	ofSetVerticalSync(true);
+
+   // ofSetLogLevel(OF_LOG_VERBOSE);
 		
 	bDebug = false;
 	
@@ -37,17 +39,17 @@ void ofApp::setup() {
 	align_init();
 
 	//fonts
-	font.load("fonts/Roboto/Roboto-Regular.ttf", body, true, true, true);
-	font1.load("fonts/Roboto/Roboto-Bold.ttf", body, true, true, true);
+    font.load("fonts/FuturaPTBook.otf", body, true, true, true);
+    font1.load("fonts/FuturaPTBold.otf", body, true, true, true);
 
 	//clock
 	clock.setup(body);
 	
 
 	//gallery
-	gallery.setup(body, w, h / 2);
-	gallery.strip_setup(body);
-	gallery.load();
+    gallery.setup(body, w, h / 2);
+//    gallery.strip_setup();
+//	gallery.load();
 		
 	state = 0;
 	numMarkers = 3;

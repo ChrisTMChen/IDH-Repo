@@ -16,7 +16,7 @@ void Gallery::load_film_logos() {
 
 	ofDirectory dir("film_logos/");
 	dir.listDir();
-	for (int i = 0; i < dir.size(); i++) {
+    for (unsigned int i = 0; i < dir.size(); i++) {
 		ofImage img;
 		img.load(dir.getPath(i));
 		film_logos.push_back(img);
@@ -41,11 +41,13 @@ void Gallery::setup(int fontsize, int width, int height) {
 void Gallery::strip_setup() {
 
 	//load all galleries
+    ofDirectory dir("galleries/");
+    dir.listDir();
 	loaded = false;
-	for (int i = 0; i <= 16; i++) {
+    for (unsigned int i = 0; i < dir.size(); i++) {
 		string name;
+        name = "galleries/gallery" + ofToString(i) + "/";
 		gallery_name.push_back(name);
-		gallery_name[i] = "galleries/gallery" + ofToString(i) + "/";
 	}
 
 }
