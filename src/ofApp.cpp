@@ -6,7 +6,7 @@
 void ofApp::align_init() {
 
 	heading = h / 15;
-	body = h / 30;
+	body = h / 60;
 	body1 = h / 22;
 	left = w / 12;
 	left1 = w / 16;
@@ -45,7 +45,7 @@ void ofApp::setup() {
 	
 
 	//gallery
-	gallery.setup(body);
+	gallery.setup(body, w, h / 2);
 	gallery.strip_setup(body);
 	gallery.load();
 		
@@ -201,15 +201,17 @@ void ofApp::check_markers() {
 }
 
 //--------------------------------------------------------------
-void ofApp::gallery_load(int select_gallery){
+void ofApp::gallery_load(int select_gallery) {
 	gallery.strip_setup(select_gallery);
 	gallery.load();
 }
 
 //--------------------------------------------------------------
 void ofApp::gallery_home_load() {
+
 	gallery.strip_setup();
 	gallery.load();
+
 }
 
 //--------------------------------------------------------------
@@ -222,9 +224,10 @@ void ofApp::draw() {
 	check_markers(); // run marker events
 	
 	gallery.drawSpeed(1); // draw gallery speed
-	gallery.drawStrip(0, h / 2 - 240, 480, w); // draw the current loaded gallery
+	gallery.drawStrip(0, h / 2 - h/4, w, h/2); // draw the current loaded gallery
 	gallery.labels(loaded, left, bottom);// draw gallery labels
 	gallery.filmLogos(loaded, left, bottom1, w / 12, h / 12); // draw film logos
+	
 	video->draw(0, 0, w / 4, h / 4); // view camera feed
 
 }
