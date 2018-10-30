@@ -7,11 +7,14 @@ void ofApp::align_init() {
 	sizer = 10;
 	sizer1 = h / 10;
 	heading = h / 15;
-	body = h / (sizer * 4);
-	body1 = h / (sizer * 8);
+	
+	font_body = h / (sizer * 4);
+	font_heading = h / (sizer * 2);
+	font_clock = h / (sizer * 2);
+	
 	left = w / sizer;
 	left1 = 2 * left;
-	right = w - w / sizer;
+	right = w - 2 * w / sizer;
 	right1 = w - w / sizer;
 	top = h / sizer;
 	top1 = h / 2 / sizer;
@@ -50,15 +53,16 @@ void ofApp::setup() {
 	align_init();
 
 	//fonts
-    font.load("fonts/FuturaPTBook.otf", body, true, true, true);
-    font1.load("fonts/FuturaPTBold.otf", body, true, true, true);
+   // font.load("fonts/FuturaPTBook.otf", body, true, true, true);
+    //font1.load("fonts/FuturaPTBold.otf", body, true, true, true);
 
 	//clock
-	clock.setup(body);
+	clock.setup(font_clock);
 	
 
 	//gallery
-    gallery.setup(body, w, h / 2);
+	titleID = 1;
+    gallery.setup(font_body, font_heading, w, h / 2);
 
 	//homescreen
 	gif.setup();
@@ -177,10 +181,14 @@ void ofApp::load_loop(int looper) {
 		if (looper == 0) {
 			gallery_home_load();
 			cout << "gallery loaded: home" << endl;
+			
+			titleID = 1; // set title home
 		}
 		else {
 			gallery_load(looper - 1);
 			cout << "gallery loaded: " + ofToString(looper - 1) << endl;
+		
+			titleID = 2; // set title film
 		}
 		loaded[looper] = true;
 	}
@@ -201,8 +209,8 @@ void ofApp::load_loop(int looper) {
 void ofApp::check_markers() {
 	
     for (auto& m : aruco->getMarkers()) {
-		
-        string marker = ofToString(m).substr(0, 3);
+
+		string marker = ofToString(m).substr(0, 3);
 
         for (int i = 0; i < numMarkers; i++) {
             if (i == 1 && marker == "964") {
@@ -305,7 +313,7 @@ void ofApp::check_markers() {
     }
 
     if (timedout == true) {
-        load_loop(0);
+		load_loop(0);
     }
 
 	ofEnableAlphaBlending();
@@ -335,9 +343,13 @@ void ofApp::draw() {
 	check_markers(); // run marker events
 
 	//draw gif
+
 	if (timedout == true) updateGifTimer();
+	if (gif_bool == false && timedout == true) {
+		titleID = 1;
+	}
 	if (gif_bool == true && timedout == true) {
-	
+		titleID = 0;
 		ofEnableAlphaBlending();
 		gif.draw(w / 4, h / 4, w / 2, h / 2);
 		ofDisableAlphaBlending();
@@ -348,8 +360,9 @@ void ofApp::draw() {
 		gallery.drawStrip(0, h / 2 - h / 4, w, h / 2); // draw the current loaded gallery
 		gallery.labels(loaded, left, bottom);// draw gallery labels
 		gallery.filmLogos(loaded, 0, bottom - sizer1 / 4 - sizer1, sizer1, sizer1); // draw film logos
-
 	}
+
+	gallery.title(titleID, left, top);
 	gallery.draw_film_name(left, bottom + sizer1 / 2);
 
     #if !defined(TARGET_RASPBERRY_PI)

@@ -9,9 +9,10 @@ public:
 	Gallery();
 	~Gallery();
 
-	void setup(int fontsize, int width, int height);
+	void setup(int fontsize, int fontsize_1, int width, int height);
 	void load_film_logos();
 
+	void title(int title_id, int x_pos, int y_pos);
 
 	void strip_setup(int gallery_selector);
 	void strip_setup();
@@ -48,7 +49,7 @@ public:
 
 	ofBuffer buffer;
 
-	ofTrueTypeFont font;
+	ofTrueTypeFont font, font1;
 
     ofxThreadedImageLoader *loader;
 	vector<ofImage> film_logos;

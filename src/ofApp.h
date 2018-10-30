@@ -58,9 +58,10 @@ public:
 	int w, h;
 	
 	int heading;
-	int body;
-	int body1;
-	int body2;
+	
+	int font_body;
+	int font_heading;
+	int font_clock;
 
 	int left;
 	int left1;
@@ -74,8 +75,8 @@ public:
 	int bottom1;
 	int sizer, sizer1;
 	int fontsize;
-	ofTrueTypeFont font;
-	ofTrueTypeFont font1;
+	//ofTrueTypeFont font;
+	//ofTrueTypeFont font1;
 
 	ofImage logo;
 	//--------------------
@@ -85,6 +86,7 @@ public:
 	
 	//gallery
 	Gallery gallery;
+	int titleID;
 
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
 	ofVideoGrabber grabber;
