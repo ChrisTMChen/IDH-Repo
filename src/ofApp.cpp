@@ -308,6 +308,8 @@ void ofApp::check_markers() {
         load_loop(0);
     }
 
+	ofEnableAlphaBlending();
+
 }
 
 //--------------------------------------------------------------
@@ -332,24 +334,23 @@ void ofApp::draw() {
 	updateTimer(); // timers
 	check_markers(); // run marker events
 
-	
 	//draw gif
 	if (timedout == true) updateGifTimer();
 	if (gif_bool == true && timedout == true) {
-
+	
+		ofEnableAlphaBlending();
 		gif.draw(w / 4, h / 4, w / 2, h / 2);
-		 
+		ofDisableAlphaBlending();
+
 	}
-	//draw gallery
 	else {
 		gallery.drawSpeed(0.3f); // draw gallery speed
 		gallery.drawStrip(0, h / 2 - h / 4, w, h / 2); // draw the current loaded gallery
 		gallery.labels(loaded, left, bottom);// draw gallery labels
 		gallery.filmLogos(loaded, 0, bottom - sizer1 / 4 - sizer1, sizer1, sizer1); // draw film logos
+
 	}
 	gallery.draw_film_name(left, bottom + sizer1 / 2);
-
-
 
     #if !defined(TARGET_RASPBERRY_PI)
     //video->draw(0, 0, w / 4, h / 4); // view camera feed

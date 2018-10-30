@@ -49,7 +49,7 @@ void HomeGif::timer() {
 }
 
 void HomeGif::draw(int x_pos, int y_pos, int draw_width, int draw_height) {
-
+	
 	timer();	
 	imgs[currentImg].draw(x_pos, y_pos, draw_width, draw_height);
 
