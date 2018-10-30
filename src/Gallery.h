@@ -19,6 +19,7 @@ public:
     void draw_film_name(int x_pos, int y_pos);
 
 	void load();
+	void randomise();
 	void drawStrip(int x, int y, int total_width, int image_height);
 	void drawSpeed(float _speed);
 	void labels(vector<bool> loaded, int x, int y);
@@ -42,6 +43,8 @@ public:
 	vector < string > linesOfTheFile;
 	vector < ofBuffer > buffers;
 
+	vector <int> randomiser;
+
 	bool loaded;
 	int reset;
 	int draw_min, draw_max, draw_position, total_width;
@@ -54,6 +57,3 @@ public:
     ofxThreadedImageLoader *loader;
 	vector<ofImage> film_logos;
 };
-
-
-

@@ -180,15 +180,29 @@ void Gallery::load() {
 		}
 
 		for (int i = 0; i < image_vec.size(); i++) {
-            loader->loadFromDisk(image_vec[i], image_paths[i]);
-
+			randomiser.push_back(i);
 		}
+
+		ofRandomize(randomiser);
+
+		//randomise();
+
+		for (int i = 0; i < image_vec.size(); i++) {
+            loader->loadFromDisk(image_vec[randomiser[i]], image_paths[randomiser[i]]);
+		}
+
 		loaded = true;
 		
 		reset_funct();
 	}
 
 }
+void Gallery::randomise() {
+
+
+
+}
+
 
 void Gallery::drawStrip(int xoffset, int yoffset, int total_width, int image_height) {
 
@@ -200,8 +214,8 @@ void Gallery::drawStrip(int xoffset, int yoffset, int total_width, int image_hei
 		float prev_image_width = 0;
 		for (unsigned int i = 0; i < image_vec.size(); i++) {
 
-			float image_scale = image_height / image_vec[i].getHeight();
-			float new_width = image_vec[i].getWidth()*image_scale;
+			float image_scale = image_height / image_vec[randomiser[i]].getHeight();
+			float new_width = image_vec[randomiser[i]].getWidth()*image_scale;
 
 			float image_width = new_width;
 			//cout << "image iwdth = " << image_width << endl;
@@ -210,14 +224,8 @@ void Gallery::drawStrip(int xoffset, int yoffset, int total_width, int image_hei
 
 			if (x_pos - speed <= total_width && x_pos + image_width - speed > 0) {
 
-				image_vec[i].draw(x_pos - speed + xoffset, yoffset, image_width, image_height);
+				image_vec[randomiser[i]].draw(x_pos - speed + xoffset, yoffset, image_width, image_height);
 
-				// draw name
-				string str = image_paths[i];
-				string newstr = str.substr(str.find_last_of("\\") + 1);
-				//font.drawString(newstr, x_pos - speed, yoffset);
-				//font.drawString(ofToString(image_width), x_pos - speed, yoffset);
-				//font.drawString(ofToString(x_pos) + "  "+ ofToString(image_width), x_pos - speed, yoffset);
 				font.drawString(linesOfTheFile[i], x_pos - speed + xoffset, yoffset + image_height + 2 * font.getSize());
 			}
 
@@ -238,10 +246,10 @@ void Gallery::title(int title_id, int x_pos, int y_pos) {
 		font1.drawString("info", x_pos, y_pos);
 	}
 	else if (title_id == 1) {
-		font1.drawString("home_feed", x_pos, y_pos);
+		font1.drawString("home feed", x_pos, y_pos);
 	}
 	else if (title_id == 2) {
-		font1.drawString("film_feed", x_pos, y_pos);
+		font1.drawString("film feed", x_pos, y_pos);
 	}
 	ofSetColor(255);
 }
@@ -275,6 +283,7 @@ void Gallery::exit() {
     delete loader;
     loader = new ofxThreadedImageLoader();
 
+	randomiser.clear();
 	buffers.clear();
 	author_paths.clear();
 	linesOfTheFile.clear();
