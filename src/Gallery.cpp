@@ -27,7 +27,7 @@ void Gallery::load_film_logos() {
 
 }
 
-void Gallery::setup(int fontsize, int width, int height) {
+void Gallery::setup(int fontsize, int fontsize_1, int width, int height) {
 	
 	load_film_logos();
 	
@@ -37,7 +37,7 @@ void Gallery::setup(int fontsize, int width, int height) {
 	total_width = 0;
 
     font.load("fonts/FuturaPTBook.otf", fontsize, true, true, true);
-
+	font1.load("fonts/FuturaPTBold.otf", fontsize_1, true, true, true);
 }
 
 void Gallery::strip_setup() {
@@ -117,7 +117,7 @@ void Gallery::draw_film_name(int x_pos, int y_pos)
         textString = "Kodak Ultramax 400";
     }
     else {
-        textString = "Home";
+        textString = "place a film box in front of the orb to begin";
     }
 
     font.drawString(textString,x_pos,y_pos);
@@ -192,45 +192,58 @@ void Gallery::load() {
 
 void Gallery::drawStrip(int xoffset, int yoffset, int total_width, int image_height) {
 
-if(loaded) {
+	if (loaded) {
 
-	ofSetColor(255);
-	//ofRect(0, 0, total_width, image_height);
-	float x_pos = 0;
-    float prev_image_width = 0;
-    for (unsigned int i = 0; i < image_vec.size(); i++) {
+		ofSetColor(255);
+		//ofRect(0, 0, total_width, image_height);
+		float x_pos = 0;
+		float prev_image_width = 0;
+		for (unsigned int i = 0; i < image_vec.size(); i++) {
 
-        float image_scale = image_height / image_vec[i].getHeight();
-		float new_width = image_vec[i].getWidth()*image_scale;
+			float image_scale = image_height / image_vec[i].getHeight();
+			float new_width = image_vec[i].getWidth()*image_scale;
 
-		float image_width = new_width;
-        //cout << "image iwdth = " << image_width << endl;
+			float image_width = new_width;
+			//cout << "image iwdth = " << image_width << endl;
 
-        x_pos = x_pos + prev_image_width;
+			x_pos = x_pos + prev_image_width + total_width / 100;
 
-		if (x_pos - speed <= total_width && x_pos + image_width - speed > 0) {
+			if (x_pos - speed <= total_width && x_pos + image_width - speed > 0) {
 
-            image_vec[i].draw(x_pos - speed + xoffset, yoffset, image_width, image_height);
+				image_vec[i].draw(x_pos - speed + xoffset, yoffset, image_width, image_height);
 
-            // draw name
-			string str = image_paths[i];
-			string newstr = str.substr(str.find_last_of("\\") + 1);
-            //font.drawString(newstr, x_pos - speed, yoffset);
-            //font.drawString(ofToString(image_width), x_pos - speed, yoffset);
-            //font.drawString(ofToString(x_pos) + "  "+ ofToString(image_width), x_pos - speed, yoffset);
-			font.drawString(linesOfTheFile[i], x_pos - speed + xoffset, yoffset + image_height + 2 * font.getSize());
-		}
-
-		if (i == image_vec.size() - 1) {
-			if (x_pos + image_width - speed < total_width) {
-				reset_funct();
+				// draw name
+				string str = image_paths[i];
+				string newstr = str.substr(str.find_last_of("\\") + 1);
+				//font.drawString(newstr, x_pos - speed, yoffset);
+				//font.drawString(ofToString(image_width), x_pos - speed, yoffset);
+				//font.drawString(ofToString(x_pos) + "  "+ ofToString(image_width), x_pos - speed, yoffset);
+				font.drawString(linesOfTheFile[i], x_pos - speed + xoffset, yoffset + image_height + 2 * font.getSize());
 			}
+
+			if (i == image_vec.size() - 1) {
+				if (x_pos + image_width - speed < total_width) {
+					reset_funct();
+				}
+			}
+
+			prev_image_width = image_width;
 		}
-
-        prev_image_width = image_width;
 	}
-}
 
+}
+void Gallery::title(int title_id, int x_pos, int y_pos) {
+	ofSetColor(251, 207, 24);
+	if (title_id == 0) {
+		font1.drawString("info", x_pos, y_pos);
+	}
+	else if (title_id == 1) {
+		font1.drawString("home_feed", x_pos, y_pos);
+	}
+	else if (title_id == 2) {
+		font1.drawString("film_feed", x_pos, y_pos);
+	}
+	ofSetColor(255);
 }
 
 
