@@ -64,7 +64,7 @@ void Gallery::strip_setup(int id) {
 
 }
 
-void Gallery::draw_film_name()
+void Gallery::draw_film_name(int x_pos, int y_pos)
 {
     string textString = "";
 
@@ -120,7 +120,7 @@ void Gallery::draw_film_name()
         textString = "Home";
     }
 
-    font.drawString(textString,320,1038);
+    font.drawString(textString,x_pos,y_pos);
 }
 
 void Gallery::reset_funct() {

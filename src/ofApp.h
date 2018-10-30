@@ -4,6 +4,7 @@
 #include "Clock.h"
 #include "Gallery.h"
 #include "ofxAruco.h"
+#include "HomeGif.h"
 
 class ofApp : public ofBaseApp {
 
@@ -19,13 +20,16 @@ public:
 
 	void startTimer();
 	void updateTimer();
-	void timers();
+
+	void startGifTimer();
+	void updateGifTimer();
 
 	void drawClock();
 	void check_markers();
 	void load_loop(int looper);
 	void gallery_load(int select_gallery);
 	void gallery_home_load();
+	void screen_titles();
 
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -39,12 +43,20 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
+	//timeout vars
+	float curTime, prevTime;
+	bool timedout;
 	int timeOut;
 
+	//gif
+	HomeGif gif;
+	float gifLength, gifTime, gifReset;
+	bool gif_bool;
+
+	//interface, margines and themes
+	//--------------------
 	int w, h;
-
-	float curTime, prevTime, frame, reset;
-
+	
 	int heading;
 	int body;
 	int body1;
@@ -60,17 +72,20 @@ public:
 	int top1;
 	int bottom;
 	int bottom1;
-
-	bool timedout;
-
-	ofImage logo;
+	int sizer, sizer1;
 	int fontsize;
-
 	ofTrueTypeFont font;
 	ofTrueTypeFont font1;
 
+	ofImage logo;
+	//--------------------
+
+	//clock
 	Clock clock;
+	
+	//gallery
 	Gallery gallery;
+
 
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
 	ofVideoGrabber grabber;
