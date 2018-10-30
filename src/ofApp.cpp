@@ -4,18 +4,19 @@
 #include "ofBitmapFont.h"
 
 void ofApp::align_init() {
-
+	sizer = 10;
+	sizer1 = h / 10;
 	heading = h / 15;
-	body = h / 60;
-	body1 = h / 22;
-	left = w / 12;
-	left1 = w / 16;
-	right = w - w / 12;
-	right1 = w - w / 16;
-	top = h / 12;
-	top1 = h / 16;
-	bottom = h - h / 12;
-	bottom1 = h - h / 16;
+	body = h / (sizer * 4);
+	body1 = h / (sizer * 8);
+	left = w / sizer;
+	left1 = 2 * left;
+	right = w - w / sizer;
+	right1 = w - w / sizer;
+	top = h / sizer;
+	top1 = h / 2 / sizer;
+	bottom = h - h / sizer;
+	bottom1 = h - h / (sizer / 2);
 	xcentre = w / 2;
 	ycentre = h / 2;
 
@@ -58,15 +59,19 @@ void ofApp::setup() {
 
 	//gallery
     gallery.setup(body, w, h / 2);
-//    gallery.strip_setup();
-//	gallery.load();
-		
+
+	//homescreen
+	gif.setup();
+	gif_bool = false;
+	gifLength = 2 * 5 * gif.frameLength;
+	gifTime = 0;
+	gifReset = 0;
+
+	//markers
 	state = 0;
     numMarkers = 17;
 	timeOut = 3000;
 	timedout = false;
-	frame = 0;
-	reset = 0;
 
 	toggle = 0;
 
@@ -103,7 +108,8 @@ void ofApp::setup() {
 	ofEnableAlphaBlending();
 }
 
-//--------------------------------------------------------------
+
+//-------------------------------------------------------------------------
 void ofApp::update() {
     //ofSetWindowTitle("OF_IDH ~ FPS:" + ofToString(ofGetFrameRate()));
 
@@ -114,21 +120,36 @@ void ofApp::update() {
 	}
 }
 
-//-------------------------------
+
+//-------------------------------------------------------------------------
 void ofApp::startTimer() {
 	
 	prevTime = curTime = ofGetElapsedTimeMillis();
 
-	ofBackground(47, 54, 64);
-	logo.draw(0, 980);
+}
 
-	if(bDebug) {
-		video->draw(w / 4, h / 4, video->getWidth(), video->getHeight()); // view camera feed
+
+//-------------------------------------------------------------------------
+void ofApp::startGifTimer() {
+	gifTime = gifReset = ofGetElapsedTimeMillis();
+}
+
+
+//-------------------------------------------------------------------------
+void ofApp::updateGifTimer() {
+
+	gifTime = ofGetElapsedTimeMillis();
+
+	if (gifTime - gifReset >= gifLength) {
+
+		gif_bool = !gif_bool;
+		
+		startGifTimer();
 	}
 }
 
 
-//-----------------------------------
+//-------------------------------------------------------------------------
 void ofApp::updateTimer() {
 
 	curTime = ofGetElapsedTimeMillis();
@@ -307,16 +328,28 @@ void ofApp::gallery_home_load() {
 void ofApp::draw() {
 
 	ofBackground(47, 54, 64); // blue background
-	logo.draw(0, 980); // film never die logo
+	logo.draw(0, bottom, sizer1, sizer1); // film never die logo
 	updateTimer(); // timers
+	check_markers(); // run marker events
 
-    check_markers(); // run marker events
 	
-    gallery.drawSpeed(0.3f); // draw gallery speed
-	gallery.drawStrip(0, h / 2 - h/4, w, h/2); // draw the current loaded gallery
-	gallery.labels(loaded, left, bottom);// draw gallery labels
-    gallery.filmLogos(loaded, 0, 830, 100, 100); // draw film logos
-    gallery.draw_film_name();
+	//draw gif
+	if (timedout == true) updateGifTimer();
+	if (gif_bool == true && timedout == true) {
+
+		gif.draw(w / 4, h / 4, w / 2, h / 2);
+		 
+	}
+	//draw gallery
+	else {
+		gallery.drawSpeed(0.3f); // draw gallery speed
+		gallery.drawStrip(0, h / 2 - h / 4, w, h / 2); // draw the current loaded gallery
+		gallery.labels(loaded, left, bottom);// draw gallery labels
+		gallery.filmLogos(loaded, 0, bottom - sizer1 / 4 - sizer1, sizer1, sizer1); // draw film logos
+	}
+	gallery.draw_film_name(left, bottom + sizer1 / 2);
+
+
 
     #if !defined(TARGET_RASPBERRY_PI)
     //video->draw(0, 0, w / 4, h / 4); // view camera feed
@@ -326,20 +359,9 @@ void ofApp::draw() {
 
    // font.drawString("Fps: " + ofToString(ofGetFrameRate()),200,ofGetHeight()-200);
 }
-//------------------------------------------------------------------
-void ofApp::timers() {
-	
-	frame = frame + 0.005; // change for home toggle duration
 
-	if (frame >= 2) {
-		//display = 1;
-		if (frame >= 6) {
-			//display = 0;
-			reset = frame;
-			frame = frame - reset;
-		}
-	}
-
+void ofApp::screen_titles() {
+	//font.drawString()
 }
 
 //--------------------------------------------------------------
