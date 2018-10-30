@@ -163,15 +163,22 @@ void Gallery::load() {
 			dir1.listDir();
 			for (int j = 0; j < dir1.size(); j++) {
 				author_paths.push_back(ofToString(dir1.getPath(j)));
+				ofBuffer buf;
+				buffers.push_back(buf);
 			}
 			dir1.close();
 		}
-				
-		//--- randomize order and load images from string vector
 
-		
-		ofRandomize(image_paths);
-		
+		for (int i = 0; i < author_paths.size(); i++) {
+			buffers[i] = ofBufferFromFile(author_paths[i]);
+			
+			for (auto line : buffers[i].getLines()) {
+				if (line != "") {
+					linesOfTheFile.push_back(line);
+				}
+			}
+		}
+
 		for (int i = 0; i < image_vec.size(); i++) {
             loader->loadFromDisk(image_vec[i], image_paths[i]);
 
@@ -211,6 +218,7 @@ if(loaded) {
             //font.drawString(newstr, x_pos - speed, yoffset);
             //font.drawString(ofToString(image_width), x_pos - speed, yoffset);
             //font.drawString(ofToString(x_pos) + "  "+ ofToString(image_width), x_pos - speed, yoffset);
+			font.drawString(linesOfTheFile[i], x_pos - speed + xoffset, yoffset + image_height + 2 * font.getSize());
 		}
 
 		if (i == image_vec.size() - 1) {
@@ -254,6 +262,9 @@ void Gallery::exit() {
     delete loader;
     loader = new ofxThreadedImageLoader();
 
+	buffers.clear();
+	author_paths.clear();
+	linesOfTheFile.clear();
 	image_vec.clear();
 	image_paths.clear();
 	gallery_name.clear();

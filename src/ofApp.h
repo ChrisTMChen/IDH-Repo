@@ -86,7 +86,6 @@ public:
 	//gallery
 	Gallery gallery;
 
-
 	//~~~~~~~~~~~~~~~~~~~~~ofxAruco~~~~~~~~~~~~~~~~~~~~~~~
 	ofVideoGrabber grabber;
 	ofVideoPlayer player;

@@ -35,7 +35,11 @@ public:
 	vector<string> gallery_name;
 	vector<ofImage> image_vec;
 	vector<string> image_paths;
+	
 	vector<string> author_paths;
+
+	vector < string > linesOfTheFile;
+	vector < ofBuffer > buffers;
 
 	bool loaded;
 	int reset;
