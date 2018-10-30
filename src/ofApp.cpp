@@ -10,12 +10,12 @@ void ofApp::align_init() {
 	
 	font_body = h / (sizer * 4);
 	font_heading = h / (sizer * 2);
-	font_clock = h / (sizer * 2);
+	font_clock = h / (sizer * 2.5);
 	
 	left = w / sizer;
-	left1 = 2 * left;
+	left1 = left - w/20;
 	right = w - 2 * w / sizer;
-	right1 = w - w / sizer;
+	right1 = right + w/20;
 	top = h / sizer;
 	top1 = h / 2 / sizer;
 	bottom = h - h / sizer;
@@ -362,7 +362,7 @@ void ofApp::draw() {
 		gallery.filmLogos(loaded, 0, bottom - sizer1 / 4 - sizer1, sizer1, sizer1); // draw film logos
 	}
 
-	gallery.title(titleID, left, top);
+	gallery.title(titleID, left1, top);
 	gallery.draw_film_name(left, bottom + sizer1 / 2);
 
     #if !defined(TARGET_RASPBERRY_PI)
@@ -382,7 +382,7 @@ void ofApp::screen_titles() {
 void ofApp::drawClock() {
 
 	clock.getTime();
-	clock.display(right, top);
+	clock.display(right1, top);
 }
 
 //--------------------------------------------------------------
